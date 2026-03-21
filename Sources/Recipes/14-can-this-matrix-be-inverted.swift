@@ -17,9 +17,10 @@ import Quiver
     // Step 1: Check the determinant
     // det = (4×6) - (7×2) = 24 - 14 = 10
     let det = A.determinant  // 10.0 — non-zero, so inverse exists
+    print("Determinant: \(det)")
 
     // Step 2: Compute the inverse
-    if let inv = A.inverted() {
+    if let inv = try? A.inverted() {
         print("A⁻¹ = \(inv)")
 
         // Step 3: Verify — A × A⁻¹ should equal the identity matrix
@@ -33,5 +34,5 @@ import Quiver
     // This matrix collapses 2D space into a line — information is lost
     let singular: [[Double]] = [[1.0, 2.0], [2.0, 4.0]]
     print("Singular det = \(singular.determinant)")  // 0.0
-    print("Invertible?   \(singular.inverted() != nil)")  // false
+    print("Invertible?   \((try? singular.inverted()) != nil)")  // false
 }

@@ -18,6 +18,7 @@ import Quiver
     // How much force pushes along the ramp?
     // scalarProjection: the length of the shadow cast onto the ramp
     let along = force.scalarProjection(onto: ramp)  // 5.0
+    print("Scalar projection (length): \(along)")
 
     // vectorProjection: the actual vector component along the ramp
     let parallel = force.vectorProjection(onto: ramp)  // [5.0, 0.0]

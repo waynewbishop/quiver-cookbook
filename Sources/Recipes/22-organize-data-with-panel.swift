@@ -21,10 +21,11 @@ import Quiver
 
     // Access a single column by name
     let ages = data["age"]        // [25.0, 45.0, 35.0, ...]
-    let avgAge = ages?.mean()     // ~35.25
+    let avgAge = ages.mean()      // ~35.25
+    print("Average age: \(avgAge ?? 0)")
 
     // Filter: keep only rows where score > 650
-    let highScore = data["score"]?.isGreaterThan(650.0) ?? []
+    let highScore = data["score"].isGreaterThan(650.0)
     let qualified = data.filtered(where: highScore)
     print("Qualified rows: \(qualified.rowCount)")
 

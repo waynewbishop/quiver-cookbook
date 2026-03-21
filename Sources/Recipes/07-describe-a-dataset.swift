@@ -29,5 +29,6 @@ import Quiver
         print("IQR:    \(q.iqr)")       // 16.25 — middle 50% range
     }
 
-    print("Mean: \(avg ?? 0), Std: \(String(format: "%.2f", sd ?? 0))")
+    print("Mean: \(avg ?? 0), Median: \(mid ?? 0)")
+    print("Std: \(String(format: "%.2f", sd ?? 0)), Variance: \(String(format: "%.2f", v ?? 0))")
 }

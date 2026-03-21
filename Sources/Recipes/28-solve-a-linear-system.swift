@@ -30,7 +30,7 @@ import Quiver
     // Solve: x = A⁻¹ × b
     // The inverse "undoes" the mixing of quantities,
     // revealing the individual prices
-    if let A_inv = A.inverted() {
+    if let A_inv = try? A.inverted() {
         let prices = A_inv.multiplyMatrix(b)
 
         // prices[0][0] = shirt price, prices[1][0] = hat price

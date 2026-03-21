@@ -10,6 +10,7 @@ import Quiver
     // A velocity vector: 3 units east, 4 units north
     let velocity = [3.0, 4.0]
     let speed = velocity.magnitude  // 5.0 (the "how much")
+    print("Speed: \(speed)")
 
     // Normalize: divide each component by the magnitude
     // [3/5, 4/5] = [0.6, 0.8] — same direction, length = 1.0
