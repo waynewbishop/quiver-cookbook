@@ -1,4 +1,4 @@
-# The Quiver Cookbook
+# The Quiver Cookbook — Vector Mathematics, Statistics, and ML Models in Swift
 
 The cookbook comprises interactive recipes for learning vector mathematics, numerical computing, and machine learning in Swift. Designed for developers exploring the math behind machine learning, recommendation engines, and data analysis. Each recipe is a single `.swift` file that runs interactively inside Xcode as a playground macro. This lightweight model allows developers to quickly test, learn and experiment with the Quiver API. 
 
@@ -22,6 +22,18 @@ Open in Xcode 26. Browse `recipes/`, pick one, run it.
 3. Drop it into your project and run
 
 Each recipe uses the Xcode 26 `#Playground` macro, which shows results inline as you type.
+
+## Quick reference — by use case
+
+| I want to... | Start with |
+|---|---|
+| Understand vectors and linear algebra | 1, 2, 3, 23 |
+| Build a recommendation or search engine | 4, 5, 6, 21 |
+| Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
+| Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
+| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26 |
+| Prepare data for machine learning | 19, 22, 24 |
+| Find patterns in unlabeled data | 6, 18, 29 |
 
 ## Recipes
 
@@ -114,6 +126,56 @@ When features have vastly different magnitudes — a credit score (300-850) and 
 **20. [Split, Train, Evaluate](recipes/20-split-train-evaluate.swift)**
 
 The most important rule in machine learning: never evaluate a model on the same data it trained on. Splitting data into training and test sets lets us measure how well the model generalizes to data it has never seen. This recipe runs the complete pipeline — split the data, train a classifier, predict on held-out examples, and measure accuracy, precision, recall, and F1 score. It's the workflow every ML project follows, regardless of model or domain.
+
+### Search and text
+
+**21. [Search by Meaning](recipes/21-search-by-meaning.swift)**
+
+Traditional search matches keywords — if you search "fast running," it only finds documents containing those exact words. Semantic search matches meaning — "jogging sprint" ranks highly because it means something similar, even though it shares no words with the query. This recipe builds the full pipeline: tokenize text into words, look up each word's vector representation, average them into a document vector, then rank a catalog by cosine similarity.
+
+### Data organization
+
+**22. [Organize Data with Panel](recipes/22-organize-data-with-panel.swift)**
+
+Raw arrays of numbers are hard to work with when each column represents something different — age, income, credit score. Panel gives your data named columns so you can access, filter, inspect, and split data without losing track of which numbers mean what. This recipe shows how to create a Panel, run `describe()` for a statistical summary, filter rows by condition, and split into training and test sets with columns staying aligned automatically.
+
+### Projections
+
+**23. [Project a Vector onto Another](recipes/23-project-a-vector.swift)**
+
+Projection decomposes one vector into two parts: the component that lies along another vector (parallel) and the component perpendicular to it (orthogonal). Together they reconstruct the original exactly. The classic example is force on a ramp — how much pushes you forward along the surface, and how much pushes you into it. This decomposition appears in physics, graphics, and ML wherever you need to separate a signal into independent components.
+
+### Activation functions
+
+**24. [From Scores to Probabilities](recipes/24-from-scores-to-probabilities.swift)**
+
+Raw model outputs are just numbers — they could be any magnitude, positive or negative. Activation functions convert them into values we can interpret. Sigmoid squishes a single score into the range 0 to 1, answering "how likely is this?" SoftMax takes a set of scores and distributes them into probabilities that sum to exactly 1.0, answering "which category is most likely?" These two functions are the final step in nearly every classification model.
+
+### Model evaluation
+
+**25. [Evaluate a Classifier](recipes/25-evaluate-a-classifier.swift)**
+
+Accuracy alone can be misleading — if 95% of emails are not spam, a model that always predicts "not spam" gets 95% accuracy while catching zero spam. Precision measures how many of the model's positive predictions were actually correct (few false alarms). Recall measures how many actual positives the model caught (few missed cases). F1 balances both into a single score. This recipe shows all four metrics on a concrete set of predictions.
+
+**26. [Evaluate a Regression Model](recipes/26-evaluate-a-regression.swift)**
+
+A classifier is right or wrong. A regression model is close or far — so we measure how far off the predictions are. R² tells us how much variation the model explains (1.0 = perfect, 0.0 = useless). MSE penalizes large errors heavily by squaring the differences. RMSE converts back to the original units so we can say "on average, predictions are off by about $4K." Together these three metrics tell the full story of a regression model's quality.
+
+**27. [Correlation Matrix](recipes/27-correlation-matrix.swift)**
+
+Correlation measures how two variables move together: +1.0 means they rise and fall in lockstep, -1.0 means one rises when the other falls, and 0.0 means no relationship at all. A correlation matrix compares every variable against every other in one computation. This recipe compares temperature and ice cream sales — a correlation near 1.0 reveals that hotter days drive more sales. Before training an ML model, correlation helps identify which features are redundant and which carry independent signal.
+
+### Linear systems
+
+**28. [Solve a Linear System](recipes/28-solve-a-linear-system.swift)**
+
+Many real-world problems reduce to a set of equations with multiple unknowns — two products with unknown prices, three ingredients with unknown proportions. In matrix form, these become A × x = b. If A is invertible, the solution is x = A⁻¹ × b — the matrix inverse isolates the unknowns in one operation. This recipe solves a two-product pricing problem and verifies the answer by plugging the results back into the original equations.
+
+### Clustering
+
+**29. [Find the Best K](recipes/29-find-the-best-k.swift)**
+
+K-Means requires you to choose K — the number of clusters — before running. Too few and distinct groups get merged. Too many and natural groups get split. The elbow method runs K-Means for each K and measures inertia (total distance from points to centroids). The "elbow" in the curve — where improvement drops sharply then levels off — reveals the natural number of groups in the data. This recipe runs the full elbow analysis and prints the curve.
 
 ## Learn the math
 

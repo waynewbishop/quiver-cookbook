@@ -8,10 +8,11 @@ import Quiver
 
 #Playground("Split, Train, Evaluate") {
 
-    // Feature data: [sepal length, sepal width]
+    // Weather data: [temperature °F, humidity %]
+    // Class 0 = no rain, Class 1 = rain
     let features: [[Double]] = [
-        [5.1, 3.5], [4.9, 3.0], [4.7, 3.2], [5.0, 3.4], [4.6, 3.1],
-        [7.0, 3.2], [6.4, 3.2], [6.9, 3.1], [6.5, 2.8], [6.2, 3.4]
+        [85.0, 30.0], [90.0, 25.0], [78.0, 40.0], [82.0, 35.0], [88.0, 28.0],
+        [65.0, 85.0], [60.0, 90.0], [68.0, 80.0], [62.0, 88.0], [64.0, 82.0]
     ]
     let labels = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1]
 
