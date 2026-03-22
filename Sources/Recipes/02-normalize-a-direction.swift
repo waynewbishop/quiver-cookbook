@@ -20,9 +20,10 @@ import Quiver
     let check = direction.magnitude  // 1.0
 
     // Why this matters: now we can apply any speed we want.
-    // Move in this direction at 10 units per second:
+    // Scalar multiplication scales every component equally —
+    // the direction stays the same, only the magnitude changes
     let newSpeed = 10.0
-    let newVelocity = direction.map { $0 * newSpeed }  // [6.0, 8.0]
+    let newVelocity = newSpeed * direction  // [6.0, 8.0]
 
     // The new velocity has magnitude 10.0, same direction as original
     let verifySpeed = newVelocity.magnitude  // 10.0
