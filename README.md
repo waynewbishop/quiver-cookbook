@@ -25,9 +25,9 @@ Open the project in Xcode 26. Quiver is included as a package dependency and res
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
 | Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
 | Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26 |
-| Prepare data for machine learning | 19, 22, 24, 30, 33 |
+| Prepare data for machine learning | 19, 22, 24, 30, 32 |
 | Find patterns in unlabeled data | 6, 18, 29 |
-| Write numerical code without loops | 31, 32 |
+| Write numerical code without loops | 31 |
 
 ## Recipes
 
@@ -183,15 +183,9 @@ Numerical computing starts with creating arrays of specific shapes and values. I
 
 Broadcasting applies a scalar operation to every element in an array without writing a loop. The Fahrenheit-to-Celsius formula `(F - 32) × 5/9` becomes `(fahrenheit - 32.0) * (5.0 / 9.0)` — the code reads exactly like the math. This recipe shows scalar arithmetic, z-score standardization, and why broadcasting eliminates the `for` loops and `.map` closures that clutter numerical code.
 
-### Element-wise math
-
-**32. [Element-Wise Math](Sources/Recipes/32-element-wise-math.swift)**
-
-Mathematical functions applied to every element of an array at once — `exp()`, `log()`, `sqrt()`, `sin()`, `cos()`, and `power()`. These are the operations that power activation functions in neural networks, signal processing, and scientific computing. This recipe shows transformation chains, demonstrates that `exp` and `log` are inverses, and applies trigonometry to arrays of angles.
-
 ### Stratified splitting
 
-**33. [Stratified Split](Sources/Recipes/33-stratified-split.swift)**
+**32. [Stratified Split](Sources/Recipes/32-stratified-split.swift)**
 
 A regular train/test split can leave all examples of a rare class in one partition. If only 10% of samples are positive and they all end up in the test set, the model trains without ever seeing the positive class. Stratified splitting preserves the class proportions in both partitions, ensuring the model sees representative examples of every class during training.
 

@@ -19,15 +19,15 @@ import Quiver
     let labels = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
 
     // Stratified split: both partitions keep the 80/20 class ratio
+    // Unlike trainTestSplit, this ensures the rare class appears
+    // in both train and test — so the model sees positive examples
     let (trainX, testX, trainY, testY) = features.stratifiedSplit(
         labels: labels, testRatio: 0.2, seed: 42
     )
 
-    // Verify: the test set contains at least one positive example
-    let testPositives = testY.filter { $0 == 1 }.count
-    let trainPositives = trainY.filter { $0 == 1 }.count
-
-    print("Train: \(trainX.count) samples (\(trainX[0].count) features), \(trainPositives) positive")
-    print("Test:  \(testX.count) samples (\(testX[0].count) features), \(testPositives) positive")
-    print("Class ratio preserved in both partitions")
+    // Train and evaluate — the split flows directly into the pipeline
+    let model = GaussianNaiveBayes.fit(features: trainX, labels: trainY)
+    let predictions = model.predict(testX)
+    
+    print(predictions.classificationReport(actual: testY))
 }

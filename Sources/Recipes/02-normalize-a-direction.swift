@@ -28,8 +28,16 @@ import Quiver
     // The new velocity has magnitude 10.0, same direction as original
     let verifySpeed = newVelocity.magnitude  // 10.0
 
-    print("Direction: \(direction)")        // [0.6, 0.8]
-    print("Unit length: \(check)")          // 1.0
-    print("At speed 10: \(newVelocity)")    // [6.0, 8.0]
-    print("New speed: \(verifySpeed)")      // 10.0
+    // Decimals hide the math. 0.6 doesn't tell you much.
+    // asFractions() converts each element to its rational form,
+    // revealing that the unit vector is exactly [3/5, 4/5] —
+    // the Pythagorean triple divided by the hypotenuse.
+    // Useful for verification, teaching, and chart labels.
+    let fractions = direction.asFractions()  // [3/5, 4/5]
+
+    print("Direction:  \(direction)")        // [0.6, 0.8]
+    print("Fractions:  \(fractions)")        // [3/5, 4/5]
+    print("Unit length: \(check)")           // 1.0
+    print("At speed 10: \(newVelocity)")     // [6.0, 8.0]
+    print("New speed:   \(verifySpeed)")     // 10.0
 }

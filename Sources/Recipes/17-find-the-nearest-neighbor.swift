@@ -33,4 +33,16 @@ import Quiver
     // [5, 7] is near cluster B → class 1
     // [3.5, 5] is in between → depends on which neighbors are closest
     print("Predictions: \(predictions)")
+    
+    //TODO: do the predictions conform to sequence, similar to k-means?
+    //I would like to see which class of content which prediction maps
+    //back to from an educational standpoint. This would be similar to the
+    //clusters with k-means.
+    
+    /*
+     for prediction in predictions {
+        //now extract prediction information..
+     }
+     */
+        
 }
