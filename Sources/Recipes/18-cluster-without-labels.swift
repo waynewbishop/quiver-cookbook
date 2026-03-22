@@ -2,10 +2,11 @@ import Playgrounds
 import Quiver
 
 // Cluster Without Labels
-// K-Means finds natural groupings in data that has no labels.
-// You tell it how many clusters (k) to look for. It assigns
-// each point to the nearest centroid, then adjusts centroids
-// until they stabilize.
+// K-Means uses the same vector math from earlier recipes:
+// distance(to:) (Recipe 1) assigns each point to its nearest
+// centroid, and meanVector() recomputes centroids as the average
+// position of each group. This loop — measure distance, regroup,
+// recalculate center — repeats until the clusters stabilize.
 
 #Playground("Cluster Without Labels") {
 
@@ -16,7 +17,9 @@ import Quiver
         [9.0, 8.0], [8.5, 8.5], [9.2, 7.8]     // group C
     ]
 
-    // Fit: iteratively assigns points to clusters and moves centroids
+    // Fit: each iteration uses distance(to:) to assign points,
+    // then meanVector() to move centroids — the same operations
+    // from Recipes 1 and 7, applied in a loop until convergence
     let model = KMeans.fit(data: data, k: 3, seed: 42)
 
     // Which cluster did each point land in?

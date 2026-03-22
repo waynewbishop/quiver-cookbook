@@ -2,9 +2,11 @@ import Playgrounds
 import Quiver
 
 // Classify with Naive Bayes
-// Gaussian Naive Bayes learns the mean and variance of each feature
-// for each class. It predicts by asking: "which class makes this
-// data point most probable?" Fast, simple, and surprisingly effective.
+// Gaussian Naive Bayes uses the same statistics from Recipe 7 —
+// mean and variance — but computes them per class. For each new
+// data point, it evaluates the Gaussian probability density function
+// (built from exp() and the statistics) and picks the class with
+// the highest probability. The math is familiar; the application is ML.
 
 #Playground("Classify with Naive Bayes") {
 
@@ -16,8 +18,8 @@ import Quiver
     ]
     let labels = [0, 0, 0, 0, 1, 1, 1, 1]
 
-    // Fit: the model computes mean and variance per feature per class
-    // No iterative training — one pass through the data
+    // Fit: computes mean() and variance() per feature per class —
+    // the same statistics from Recipe 7, applied per group
     let model = GaussianNaiveBayes.fit(features: features, labels: labels)
 
     // Predict: will it rain given these conditions?

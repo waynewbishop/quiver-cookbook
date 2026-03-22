@@ -2,9 +2,11 @@ import Playgrounds
 import Quiver
 
 // Split, Train, Evaluate
-// The complete mini-pipeline: hold out test data, train a model,
-// then evaluate on data the model has never seen.
-// This prevents overfitting — memorizing answers vs learning patterns.
+// This recipe connects the full arc: arrays are split into train
+// and test sets, a model learns from the training data using the
+// vector math from earlier recipes (mean, variance, distance),
+// and evaluation metrics measure how well the model generalizes
+// to data it has never seen.
 
 #Playground("Split, Train, Evaluate") {
 
@@ -28,14 +30,8 @@ import Quiver
     let predictions = model.predict(testX)
 
     // Step 4: Evaluate — how well did we do on unseen data?
-    let acc = predictions.accuracy(actual: testY)
-    let prec = predictions.precision(actual: testY)
-    let rec = predictions.recall(actual: testY)
-    let f1 = predictions.f1Score(actual: testY)
-
+    // classificationReport() computes accuracy, precision, recall,
+    // and F1 in one call and formats them as a readable summary
     print("Test predictions: \(predictions)")
-    print("Accuracy:  \(String(format: "%.1f", acc * 100))%")
-    print("Precision: \(prec.map { String(format: "%.2f", $0) } ?? "N/A")")
-    print("Recall:    \(rec.map { String(format: "%.2f", $0) } ?? "N/A")")
-    print("F1 Score:  \(f1.map { String(format: "%.2f", $0) } ?? "N/A")")
+    print(predictions.classificationReport(actual: testY))
 }

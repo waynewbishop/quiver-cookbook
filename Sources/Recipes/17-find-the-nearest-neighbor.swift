@@ -2,9 +2,11 @@ import Playgrounds
 import Quiver
 
 // Find the Nearest Neighbor
-// K-Nearest Neighbors classifies a point by finding the K closest
-// training examples and taking a majority vote. No parameters are
-// learned during training — the data IS the model.
+// KNN classifies a point using the same distance(to:) from Recipe 1 —
+// the Pythagorean theorem extended to any number of dimensions.
+// It measures distance to every training point, finds the K closest,
+// and takes a majority vote. No parameters are learned — the vector
+// math IS the algorithm.
 
 #Playground("Find the Nearest Neighbor") {
 
@@ -21,8 +23,9 @@ import Quiver
         k: 3, metric: .euclidean, weight: .uniform
     )
 
-    // Predict: measures distance to every training point,
-    // finds the 3 closest, and votes on the class
+    // Predict: computes distance(to:) for every training point
+    // (same Pythagorean theorem from Recipe 1), sorts by nearest,
+    // and the 3 closest vote on the class
     let newPoints: [[Double]] = [[2.0, 3.0], [5.0, 7.0], [3.5, 5.0]]
     let predictions = model.predict(newPoints)
 

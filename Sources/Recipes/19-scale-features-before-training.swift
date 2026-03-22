@@ -2,10 +2,12 @@ import Playgrounds
 import Quiver
 
 // Scale Features Before Training
-// When features have different magnitudes, larger values dominate
-// distance calculations. A credit score (300-850) and an account
-// balance (0-250,000) are six orders of magnitude apart.
-// Scaling brings all features to the same range.
+// The distance(to:) operation from Recipe 1 treats all dimensions
+// equally — but when features have different magnitudes, larger
+// values dominate. A credit score (300-850) and an account balance
+// (0-250,000) are six orders of magnitude apart. Without scaling,
+// distance is effectively measured in dollars only. Scaling brings
+// all features to the same range so each one contributes fairly.
 
 #Playground("Scale Features Before Training") {
 

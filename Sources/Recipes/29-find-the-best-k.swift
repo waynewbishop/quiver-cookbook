@@ -2,12 +2,12 @@ import Playgrounds
 import Quiver
 
 // Find the Best K (Elbow Method)
-// K-Means requires you to choose K — the number of clusters.
-// Too few and distinct groups get merged. Too many and natural
-// groups get split. The elbow method runs K-Means for each K
-// and plots the inertia (total distance from points to their
-// centroid). The "elbow" — where improvement slows sharply —
-// is the sweet spot.
+// K-Means (Recipe 18) requires choosing K — the number of clusters.
+// The elbow method runs K-Means for each K and measures inertia:
+// the total squared distance from each point to its centroid.
+// That distance is the same Pythagorean calculation from Recipe 1.
+// The "elbow" — where inertia drops sharply then levels off —
+// reveals the natural number of groups in the data.
 
 #Playground("Find the Best K") {
 
