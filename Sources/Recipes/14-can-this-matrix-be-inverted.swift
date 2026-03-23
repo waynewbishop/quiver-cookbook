@@ -35,4 +35,10 @@ import Quiver
     let singular: [[Double]] = [[1.0, 2.0], [2.0, 4.0]]
     print("Singular det = \(singular.determinant)")  // 0.0
     print("Invertible?   \((try? singular.inverted()) != nil)")  // false
+
+    // Why this matters: LinearRegression (Recipe 15) inverts a matrix
+    // internally. If your features are redundant, the determinant is
+    // zero and fit() will throw MatrixError.singular.
+    // Quick test — non-zero means safe to fit:
+    print("Your matrix det: \(A.determinant)")  // 10.0 → safe
 }

@@ -22,14 +22,22 @@ import Quiver
     // the same statistics from Recipe 7, applied per group
     let model = GaussianNaiveBayes.fit(features: features, labels: labels)
 
-    // Predict: will it rain given these conditions?
-    let forecast: [[Double]] = [[80.0, 38.0], [63.0, 82.0]]
-    let predictions = model.predict(forecast)  // [0, 1] — no rain, rain
+    // Classify: groups results by predicted label.
+    // Each Classification has a label and the points assigned to it —
+    // the same pattern as clusters in K-Means (Recipe 18)
+    let forecast: [[Double]] = [[80.0, 38.0], [63.0, 82.0], [75.0, 45.0]]
+    let results = model.classify(forecast)
 
-    // Evaluate: how accurate is the model on training data?
+    let classNames = ["No Rain", "Rain"]
+    for group in results {
+        print("\(classNames[group.label]): \(group.count) forecasts")
+        for point in group {
+            print("  temp: \(point[0])°F, humidity: \(point[1])%")
+        }
+    }
+
+    // predict() still available for evaluation pipelines
     let trainPredictions = model.predict(features)
     let accuracy = trainPredictions.accuracy(actual: labels)
-
-    print("Predictions: \(predictions)")             // [0, 1]
-    print("Accuracy: \(String(format: "%.1f", accuracy * 100))%")
+    print("Training accuracy: \(String(format: "%.1f", accuracy * 100))%")
 }

@@ -23,26 +23,22 @@ import Quiver
         k: 3, metric: .euclidean, weight: .uniform
     )
 
-    // Predict: computes distance(to:) for every training point
+    // Classify: computes distance(to:) for every training point
     // (same Pythagorean theorem from Recipe 1), sorts by nearest,
-    // and the 3 closest vote on the class
+    // and the 3 closest vote on the class.
+    // classify() groups the results by predicted label —
+    // each Classification has a label and the points assigned to it
     let newPoints: [[Double]] = [[2.0, 3.0], [5.0, 7.0], [3.5, 5.0]]
-    let predictions = model.predict(newPoints)
+    let results = model.classify(newPoints)
 
-    // [2, 3] is near cluster A → class 0
-    // [5, 7] is near cluster B → class 1
-    // [3.5, 5] is in between → depends on which neighbors are closest
-    print("Predictions: \(predictions)")
-    
-    //TODO: do the predictions conform to sequence, similar to k-means?
-    //I would like to see which class of content which prediction maps
-    //back to from an educational standpoint. This would be similar to the
-    //clusters with k-means.
-    
-    /*
-     for prediction in predictions {
-        //now extract prediction information..
-     }
-     */
-        
+    for group in results {
+        print("Class \(group.label): \(group.count) points")
+        for point in group {
+            print("  \(point)")
+        }
+    }
+
+    // predict() returns raw labels for evaluation pipelines
+    let predictions = model.predict(newPoints)
+    print("Raw labels: \(predictions)")  // [0, 1, 1]
 }
