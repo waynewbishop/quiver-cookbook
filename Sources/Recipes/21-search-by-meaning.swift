@@ -23,11 +23,12 @@ import Quiver
     ]
 
     // Step 1: Tokenize — split text into lowercase words
+    // Step 2: Embed — look up each word's vector from the dictionary
+    // Words not found in the vocabulary are automatically filtered out
     let query = "fast running"
-    let queryWords = query.tokenize()  // ["fast", "running"]
-
-    // Step 2: Look up vectors for each word
-    let queryVectors = queryWords.compactMap { embeddings[$0] }
+    
+    let queryWords = query.tokenize()
+    let queryVectors = queryWords.embed(using: embeddings)
 
     // Step 3: Average into a single vector representing the whole phrase
     let queryVector = queryVectors.meanVector()!  // [0.75, 0.6, 0.75, 0.15]
@@ -35,11 +36,16 @@ import Quiver
     // A catalog of text descriptions to search
     let catalog = ["jogging sprint", "slow walking", "baking recipe", "cooking slow"]
 
-    // Step 4: Embed each catalog entry the same way
-    let catalogVectors = catalog.map { text -> [Double] in
+    // Embed each catalog entry the same way
+    // meanVector() averages all word vectors into a single vector
+    // that represents the overall meaning of the phrase.
+    // "jogging sprint" becomes one point in vector space — the average
+    // of where "jogging" and "sprint" sit individually
+    var catalogVectors: [[Double]] = []
+    for text in catalog {
         let words = text.tokenize()
-        let vecs = words.compactMap { embeddings[$0] }
-        return vecs.meanVector() ?? []
+        let vectors = words.embed(using: embeddings)
+        catalogVectors.append(vectors.meanVector() ?? [])
     }
 
     // Step 5: Rank by cosine similarity — direction, not magnitude

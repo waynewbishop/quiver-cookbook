@@ -22,6 +22,16 @@ import Quiver
     // the same statistics from Recipe 7, applied per group
     let model = GaussianNaiveBayes.fit(features: features, labels: labels)
 
+    // See what the model learned — print() gives a clean summary
+    // for each class: the prior probability, the feature means,
+    // and sample count. This IS the entire training — just averages.
+    print(model)  // GaussianNaiveBayes: 2 classes, 2 features
+    for stats in model.classes {
+        print(stats)
+        // Class 0: prior 50.0%, means [83.75, 32.50], 4 samples
+        // Class 1: prior 50.0%, means [63.75, 85.75], 4 samples
+    }
+
     // Classify: groups results by predicted label.
     // Each Classification has a label and the points assigned to it —
     // the same pattern as clusters in K-Means (Recipe 18)

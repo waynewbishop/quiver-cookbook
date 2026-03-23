@@ -16,7 +16,10 @@ import Quiver
         ("score",   [620.0, 750.0, 680.0, 790.0, 590.0, 720.0, 660.0, 640.0])
     ])
 
-    // Inspect: see column stats at a glance
+    // print() gives a quick summary of the structure
+    print(data)  // Panel: 3 columns, 8 rows
+
+    // describe() gives detailed column statistics
     print(data.describe())
 
     // Access a single column by name

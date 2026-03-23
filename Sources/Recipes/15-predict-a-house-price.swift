@@ -29,6 +29,7 @@ import Quiver
     // Fit the model — solves the normal equation using the same
     // matrix operations from Recipes 13-14: transpose, multiply, invert
     if let model = try? LinearRegression.fit(features: features, targets: prices) {
+        print(model)  // LinearRegression: 3 features, intercept: ...
 
         // Predict: what would a 1800 sqft, 3 bed, 6 year old house sell for?
         let prediction = model.predict([[1800.0, 3.0, 6.0]])

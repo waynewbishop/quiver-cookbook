@@ -12,10 +12,16 @@ import Quiver
     let predicted = [0, 1, 1, 0, 1, 0, 1, 1, 0, 0]
     let actual    = [0, 1, 0, 0, 1, 1, 1, 1, 0, 0]
 
-    // classificationReport() computes all four metrics in one call:
-    // - Accuracy: what fraction of predictions were correct?
-    // - Precision: of predicted positives, how many were right? (few false alarms)
-    // - Recall: of actual positives, how many did we catch? (few missed cases)
-    // - F1: harmonic mean of precision and recall — balances both
+    // The confusion matrix captures all four outcomes in one struct
+    let cm = predicted.confusionMatrix(actual: actual)
+
+    // print() gives a clean one-line summary
+    print(cm)  // TP: 4  FP: 1  TN: 4  FN: 1  (accuracy: 80.0%)
+
+    // classificationReport() formats all derived metrics
     print(predicted.classificationReport(actual: actual))
+    // Accuracy:  80.0%
+    // Precision: 0.80
+    // Recall:    0.80
+    // F1 Score:  0.80
 }

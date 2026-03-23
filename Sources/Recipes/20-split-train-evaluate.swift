@@ -25,6 +25,7 @@ import Quiver
 
     // Step 2: Train on the training set only
     let model = GaussianNaiveBayes.fit(features: trainX, labels: trainY)
+    print(model)  // GaussianNaiveBayes: 2 classes, 2 features
 
     // Step 3: Predict on data the model has never seen
     let predictions = model.predict(testX)

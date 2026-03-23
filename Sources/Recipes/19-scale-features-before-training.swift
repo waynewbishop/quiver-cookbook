@@ -25,6 +25,7 @@ import Quiver
 
     // Fit scaler on training data — learns min and max per feature
     let scaler = FeatureScaler.fit(features: features)
+    print(scaler)  // FeatureScaler: 2 features, range 0.0...1.0
 
     // Transform: each feature scaled to 0.0-1.0 range
     let scaled = scaler.transform(features)

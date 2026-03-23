@@ -22,15 +22,15 @@ import Quiver
     // from Recipes 1 and 7, applied in a loop until convergence
     let model = KMeans.fit(data: data, k: 3, seed: 42)
 
-    // Which cluster did each point land in?
-    print("Labels: \(model.labels)")  // e.g. [0, 0, 0, 1, 1, 1, 2, 2, 2]
+    // print() gives a clean summary thanks to CustomStringConvertible
+    print(model)  // KMeans: 3 clusters, 9 points, converged in N iterations
 
-    // Where are the cluster centers?
+    // Dig deeper — each cluster also prints cleanly
     let clusters = model.clusters(from: data)
-    for (i, cluster) in clusters.enumerated() {
-        print("Cluster \(i): center = \(cluster.centroid), size = \(cluster.count)")
+    for cluster in clusters {
+        print(cluster)  // Cluster: center [...], 3 points
     }
 
-    // How many iterations did it take to converge?
-    print("Converged in \(model.iterations) iterations")
+    // Individual properties still accessible for detailed inspection
+    print("Labels: \(model.labels)")  // [0, 0, 0, 1, 1, 1, 2, 2, 2]
 }

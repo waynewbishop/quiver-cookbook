@@ -22,6 +22,7 @@ import Quiver
         features: features, labels: labels,
         k: 3, metric: .euclidean, weight: .uniform
     )
+    print(model)  // KNearestNeighbors: k=3, euclidean, 6 training points, 2 features
 
     // Classify: computes distance(to:) for every training point
     // (same Pythagorean theorem from Recipe 1), sorts by nearest,
@@ -31,8 +32,9 @@ import Quiver
     let newPoints: [[Double]] = [[2.0, 3.0], [5.0, 7.0], [3.5, 5.0]]
     let results = model.classify(newPoints)
 
+    // Each Classification prints cleanly — then iterate for detail
     for group in results {
-        print("Class \(group.label): \(group.count) points")
+        print(group)  // Class 0: 1 point / Class 1: 2 points
         for point in group {
             print("  \(point)")
         }
