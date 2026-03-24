@@ -19,7 +19,10 @@ import Quiver
     // print() gives a quick summary of the structure
     print(data)  // Panel: 3 columns, 8 rows
 
-    // describe() gives detailed column statistics
+    // head() shows the actual data in tabular format
+    print(data.head(n: 5))
+
+    // describe() gives per-column summary statistics
     print(data.describe())
 
     // Access a single column by name
@@ -38,6 +41,7 @@ import Quiver
     // Convert to matrix for model input
     let features = train.toMatrix(columns: ["age", "income"])
 
-    print("Training rows: \(train.rowCount), Test rows: \(test.rowCount)")
-    print("Feature matrix: \(features.count) rows × \(features[0].count) columns")
+    // .shape returns (rows, columns) — same format as matrix .shape
+    print("Training: \(train.shape)")
+    print("Test: \(test.shape)")
 }

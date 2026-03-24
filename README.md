@@ -24,7 +24,7 @@ Open the project in Xcode 26. Quiver is included as a package dependency and res
 | Build a recommendation or search engine | 4, 5, 6, 21 |
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
 | Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
-| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26 |
+| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33 |
 | Prepare data for machine learning | 19, 22, 24, 30, 32 |
 | Find patterns in unlabeled data | 6, 18, 29 |
 | Write numerical code without loops | 31 |
@@ -188,6 +188,12 @@ Broadcasting applies a scalar operation to every element in an array without wri
 **32. [Stratified Split](Sources/Recipes/32-stratified-split.swift)**
 
 A regular train/test split can leave all examples of a rare class in one partition. If only 10% of samples are positive and they all end up in the test set, the model trains without ever seeing the positive class. Stratified splitting preserves the class proportions in both partitions, ensuring the model sees representative examples of every class during training.
+
+### Testing equality
+
+**33. [Testing Equality](Sources/Recipes/33-testing-equality.swift)**
+
+Quiver's models support direct comparison with `==`. When two training runs use the same data and the same seed, the models and their clusters are guaranteed identical. This recipe trains K-Means twice with the same seed and confirms equality at both the model level and the cluster level — then shows that a different seed produces a different result. Useful for unit tests, debugging, and verifying pipeline stability.
 
 ## Companion book
 

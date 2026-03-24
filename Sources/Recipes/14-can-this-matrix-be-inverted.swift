@@ -6,6 +6,10 @@ import Quiver
 // A × A⁻¹ = Identity (the "do nothing" matrix).
 // If the determinant is zero, the matrix is singular — no inverse exists.
 
+// This matters because Quiver's ML models use matrix inversion
+// internally. LinearRegression solves the normal equation (X'X)⁻¹X'y,
+// and if your features are overlap, that inversion fails.
+
 #Playground("Can This Matrix Be Inverted?") {
 
     // A 2×2 matrix with a non-zero determinant
@@ -36,9 +40,6 @@ import Quiver
     print("Singular det = \(singular.determinant)")  // 0.0
     print("Invertible?   \((try? singular.inverted()) != nil)")  // false
 
-    // Why this matters: LinearRegression (Recipe 15) inverts a matrix
-    // internally. If your features are redundant, the determinant is
-    // zero and fit() will throw MatrixError.singular.
-    // Quick test — non-zero means safe to fit:
-    print("Your matrix det: \(A.determinant)")  // 10.0 → safe
+    // Quick check before fitting a model — non-zero means safe:
+    print("Your matrix det: \(A.determinant)")  // 10.0 → safe to fit
 }
