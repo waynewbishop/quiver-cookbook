@@ -19,7 +19,7 @@ import Quiver
     // [0.12, 0.38, 0.50, 0.73, 0.97]
 
     print("Spam scores:       \(spamScores)")
-    print("Probabilities:     \(probabilities.map { String(format: "%.2f", $0) })")
+    print("Probabilities:     \(probabilities)")
 
     // --- SoftMax: choosing among categories ---
     // "Which animal is in this photo?" — one score per category

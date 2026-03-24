@@ -29,7 +29,7 @@ import Quiver
     // Random arrays — simulate data for testing and experimentation
     // Normal distribution: values cluster around the mean
     let samples = [Double].randomNormal(10, mean: 70.0, std: 10.0)
-    print("Random normal: \(samples.map { String(format: "%.1f", $0) })")
+    print("Random normal: \(samples)")
     print("Mean: \(samples.mean() ?? 0)")
 
     // 2D arrays — matrices initialized with zeros or ones

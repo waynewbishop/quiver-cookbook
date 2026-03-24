@@ -13,7 +13,7 @@ import Quiver
     let fahrenheit = [32.0, 68.0, 72.0, 98.6, 212.0]
     let celsius = (fahrenheit - 32.0) * (5.0 / 9.0)
     print("°F: \(fahrenheit)")
-    print("°C: \(celsius.map { String(format: "%.1f", $0) })")
+    print("°C: \(celsius)")
 
     // Scalar operations work in both directions
     let prices = [10.0, 25.0, 50.0, 75.0]
@@ -27,8 +27,8 @@ import Quiver
     // Z-score standardization — how many standard deviations
     // each value sits from the mean
     let scores = [72.0, 85.0, 91.0, 68.0, 95.0]
-    let mean = scores.mean()!
-    let std = scores.std()!
+    let mean = scores.mean() ?? 0
+    let std = scores.std() ?? 0
     let zScores = (scores - mean) / std
-    print("Z-scores: \(zScores.map { String(format: "%.2f", $0) })")
+    print("Z-scores: \(zScores)")
 }
