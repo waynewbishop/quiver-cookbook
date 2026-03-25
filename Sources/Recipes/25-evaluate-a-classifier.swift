@@ -18,10 +18,6 @@ import Quiver
     // print() gives a clean one-line summary
     print(cm)  // TP: 4  FP: 1  TN: 4  FN: 1  (accuracy: 80.0%)
 
-    // classificationReport() formats all derived metrics
+    // classificationReport() shows per-class metrics with averages
     print(predicted.classificationReport(actual: actual))
-    // Accuracy:  80.0%
-    // Precision: 0.80
-    // Recall:    0.80
-    // F1 Score:  0.80
 }

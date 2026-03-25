@@ -4,7 +4,7 @@ The cookbook comprises interactive recipes for learning vector mathematics, nume
 
 ## What is Quiver?
 
-[Quiver](https://github.com/waynewbishop/quiver) expands the Swift ecosystem with a native, Swift-first approach to vector mathematics and numerical computing. Built as an extension on the standard `Array` type, the framework embraces Swift's emphasis on readability and expressiveness, offering mathematical operations that feel natural to iOS and macOS developers.
+[Quiver](https://github.com/waynewbishop/quiver) expands the Swift ecosystem with a pure, Swift-first approach to vector mathematics and numerical computing. Built as an extension on the standard `Array` type, the framework embraces Swift's emphasis on readability and expressiveness, offering mathematical operations that feel natural to iOS and macOS developers.
 
 As a pure Swift library with zero external dependencies, Quiver runs on every Apple platform — iOS, macOS, watchOS, tvOS, and visionOS — as well as server-side Swift, Linux environments, and containerized deployments. Quiver is ideal for teaching environments, on-device processing, and any context where minimal dependencies and platform portability matter.
 
@@ -25,7 +25,7 @@ Open the project in Xcode 26. Quiver is included as a package dependency and res
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
 | Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
 | Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33 |
-| Prepare data for machine learning | 19, 22, 24, 30, 32 |
+| Prepare data for machine learning | 19, 22, 24, 30, 32, 34 |
 | Find patterns in unlabeled data | 6, 18, 29 |
 | Write numerical code without loops | 31 |
 
@@ -131,7 +131,7 @@ Traditional search matches keywords — if you search "fast running," it only fi
 
 **22. [Organize Data with Panel](Sources/Recipes/22-organize-data-with-panel.swift)**
 
-Raw arrays of numbers are hard to work with when each column represents something different — age, income, credit score. Panel gives your data named columns so you can access, filter, inspect, and split data without losing track of which numbers mean what. This recipe shows how to create a Panel, run `describe()` for a statistical summary, filter rows by condition, and split into training and test sets with columns staying aligned automatically.
+Raw arrays of numbers are hard to work with when each column represents something different — age, income, credit score. Panel gives your data named columns so you can access, filter, inspect, and split data without losing track of which numbers mean what. This recipe shows how to create a Panel, run `summary()` for a statistical overview, filter rows by condition, and split into training and test sets with columns staying aligned automatically.
 
 ### Projections
 
@@ -194,6 +194,12 @@ A regular train/test split can leave all examples of a rare class in one partiti
 **33. [Testing Equality](Sources/Recipes/33-testing-equality.swift)**
 
 Quiver's models support direct comparison with `==`. When two training runs use the same data and the same seed, the models and their clusters are guaranteed identical. This recipe trains K-Means twice with the same seed and confirms equality at both the model level and the cluster level — then shows that a different seed produces a different result. Useful for unit tests, debugging, and verifying pipeline stability.
+
+### Data balancing
+
+**34. [Balance Imbalanced Data](Sources/Recipes/34-balance-imbalanced-data.swift)**
+
+When one class vastly outnumbers another, models tend to predict the larger class and ignore the smaller one. This recipe balances the dataset by generating synthetic points for smaller classes — interpolating between existing samples using the same vector arithmetic from Recipes 1-3. Each new point sits on the line between two real samples, creating realistic training data without duplicating what already exists.
 
 ## Companion book
 

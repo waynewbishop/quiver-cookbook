@@ -22,8 +22,8 @@ import Quiver
     // head() shows the actual data in tabular format
     print(data.head(n: 5))
 
-    // describe() gives per-column summary statistics
-    print(data.describe())
+    // summary() gives per-column summary statistics
+    print(data.summary())
 
     // Access a single column by name
     let ages = data["age"]        // [25.0, 45.0, 35.0, ...]
@@ -38,10 +38,14 @@ import Quiver
     // Split for ML: 80% train, 20% test — columns stay aligned
     let (train, test) = data.trainTestSplit(testRatio: 0.2, seed: 42)
 
-    // Convert to matrix for model input
-    let features = train.toMatrix(columns: ["age", "income"])
+    // Verify the training data after splitting
+    print(train.head())
 
     // .shape returns (rows, columns) — same format as matrix .shape
     print("Training: \(train.shape)")
     print("Test: \(test.shape)")
+
+    // Convert to matrix for model input
+    let features = train.toMatrix(columns: ["age", "income"])
+    print("Feature matrix: \(features.shape)")
 }
