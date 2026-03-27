@@ -24,8 +24,8 @@ Open the project in Xcode 26. Quiver is included as a package dependency and res
 | Build a recommendation or search engine | 4, 5, 6, 21 |
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
 | Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
-| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33 |
-| Prepare data for machine learning | 19, 22, 24, 30, 32, 34 |
+| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33, 36, 37, 38 |
+| Prepare data for machine learning | 19, 22, 24, 30, 32, 34, 35 |
 | Find patterns in unlabeled data | 6, 18, 29 |
 | Write numerical code without loops | 31 |
 
@@ -200,6 +200,26 @@ Quiver's models support direct comparison with `==`. When two training runs use 
 **34. [Balance Imbalanced Data](Sources/Recipes/34-balance-imbalanced-data.swift)**
 
 When one class vastly outnumbers another, models tend to predict the larger class and ignore the smaller one. This recipe balances the dataset by generating synthetic points for smaller classes — interpolating between existing samples using the same vector arithmetic from Recipes 1-3. Each new point sits on the line between two real samples, creating realistic training data without duplicating what already exists.
+
+### Model persistence
+
+**35. [Save and Load a Trained Model](Sources/Recipes/35-save-and-load-a-model.swift)**
+
+Every Quiver model conforms to `Codable`. Train a model, encode it to JSON with `JSONEncoder`, decode it back with `JSONDecoder` — same coefficients, same predictions, verified by `==`. This recipe shows the complete round-trip: train, encode to bytes in memory, decode back to a working model. The developer decides where those bytes go — a file, UserDefaults, WatchConnectivity, or a Vapor endpoint.
+
+### Engineering ideas
+
+**36. [Can Swift Drive a Car?](Sources/Recipes/36-can-swift-drive-a-car.swift)**
+
+A playful, theoretical model that uses K-Nearest Neighbors to classify driving decisions from simulated sensor data. Given speed, distance to an obstacle, and lane offset, the model votes on whether to accelerate, maintain, brake, or steer — learning the decision boundaries from training examples rather than hardcoded rules. To be clear: Quiver cannot drive a car. Real autonomous vehicles use neural networks processing camera feeds, lidar, and radar at massive scale. This recipe demonstrates how classification works on sensor data using the same underlying math — at a much, much smaller scale.
+
+**37. [Wing Panel Rivet Inspection](Sources/Recipes/37-wing-panel-rivet-inspection.swift)**
+
+A Boeing 787 contains roughly 2.3 million parts. Rivet holes on wing panels must meet tolerances within ±0.030 inches — hole diameter, countersink depth, and head flushness are all measured. A single out-of-tolerance rivet can require an entire panel to be reworked, and at 10-20% rework rates, catching defects early saves millions. This recipe simulates a quality control station that classifies rivets as pass or fail using Gaussian Naive Bayes. Educational only — real aerospace QC uses machine vision, 3D laser scanning, and dozens of additional parameters.
+
+**38. [Wind Tunnel Lift Predictor](Sources/Recipes/38-wind-tunnel-lift-predictor.swift)**
+
+A wing's lift coefficient increases linearly with the angle of attack — the angle between the wing and the oncoming air. NACA tested hundreds of airfoil shapes in wind tunnels and published the data. The slope is approximately 0.11 per degree for a typical airfoil, meaning every degree of tilt adds about 0.11 to the lift coefficient. This recipe trains a linear regression model on simulated wind tunnel measurements, predicts lift at untested angles, and evaluates the fit with R². The same `fit()` that predicts house prices also predicts whether a wing generates enough lift to fly.
 
 ## Companion book
 

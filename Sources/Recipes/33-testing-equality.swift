@@ -27,9 +27,11 @@ import Quiver
     // Clusters can also test for equality
     let clusters1 = run1.clusters(from: data)
     let clusters2 = run2.clusters(from: data)
+    
     print(clusters1 == clusters2)  // true
 
     // A different seed produces a different model
     let run3 = KMeans.fit(data: data, k: 3, seed: 99)
+    
     print(run1 == run3)  // false
 }
