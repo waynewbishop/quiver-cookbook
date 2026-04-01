@@ -24,7 +24,7 @@ Open the project in Xcode 26. Quiver is included as a package dependency and res
 | Build a recommendation or search engine | 4, 5, 6, 21 |
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
 | Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
-| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33, 36, 37, 38 |
+| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33, 36, 37, 38, 39, 40, 41 |
 | Prepare data for machine learning | 19, 22, 24, 30, 32, 34, 35 |
 | Find patterns in unlabeled data | 6, 18, 29 |
 | Write numerical code without loops | 31 |
@@ -220,6 +220,26 @@ A Boeing 787 contains roughly 2.3 million parts. Rivet holes on wing panels must
 **38. [Wind Tunnel Lift Predictor](Sources/Recipes/38-wind-tunnel-lift-predictor.swift)**
 
 A wing's lift coefficient increases linearly with the angle of attack — the angle between the wing and the oncoming air. NACA tested hundreds of airfoil shapes in wind tunnels and published the data. The slope is approximately 0.11 per degree for a typical airfoil, meaning every degree of tilt adds about 0.11 to the lift coefficient. This recipe trains a linear regression model on simulated wind tunnel measurements, predicts lift at untested angles, and evaluates the fit with R². The same `fit()` that predicts house prices also predicts whether a wing generates enough lift to fly.
+
+### Athletics & Motion
+
+**39. [True Effort Classification](Sources/Recipes/39-true-effort-classification.swift)**
+
+A heart rate of 160 BPM means different things depending on context. Running uphill at a slow pace is harder than cruising downhill at the same heart rate. This recipe trains a K-Nearest Neighbors model on four sensor signals — heart rate, cadence, pace, and elevation change — to classify true effort, not just heart rate zones. The key insight: rows with HR at 160 are classified as "Easy" because the model sees the slow pace and downhill grade. A traditional HR zone model would call that Zone 4.
+
+**40. [Running Stress Breakdown](Sources/Recipes/40-running-stress-breakdown.swift)**
+
+Training stress scores condense an entire run into one number. That number is useful for tracking load over time, but it hides the story. This recipe computes an overall stress score then uses K-Means to decompose the run into effort clusters — revealing whether the stress came from flat cruising, uphill grinding, or downhill impact. Same score, very different recovery implications. No consumer fitness platform offers this decomposition.
+
+**41. [Recovery Prediction](Sources/Recipes/41-recovery-prediction.swift)**
+
+After a run, resting heart rate rises — a flat easy run might elevate it by 2 BPM overnight, while a hard hilly run might push it up 8 BPM. This recipe trains a linear regression model on historical run profiles to predict next-morning HR elevation — a proxy for recovery load that the watch measures automatically. No manual entry, no subjective guessing. The insight: two runs with the same stress score produce different overnight HR elevation because uphill grinding costs more recovery than flat cruising.
+
+### Logistics
+
+**42. [Delivery Route Optimizer](Sources/Recipes/42-delivery-route-optimizer.swift)**
+
+A delivery driver with 25 stops and a route card drives them in whatever order they were assigned — often zigzagging across the entire area. This recipe uses K-Means to cluster stops into geographic groups, then shows the stops within each zone sorted by distance from the cluster center. Enterprise route optimization costs hundreds of thousands of dollars. This runs on an iPhone with zero dependencies. Pair with Apple's MapKit for turn-by-turn directions between the optimized sequence of stops.
 
 ## Companion book
 

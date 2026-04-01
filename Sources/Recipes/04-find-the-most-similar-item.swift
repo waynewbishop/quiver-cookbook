@@ -27,10 +27,10 @@ import Quiver
     // Get the top 3 matches, ranked by similarity
     let top3 = scores.topIndices(k: 3)
 
-    // Print ranked results
+    // Print ranked results — rank is built into the result tuple
     let labels = ["A", "B", "C", "D", "E"]
     for result in top3 {
-        print("Item \(labels[result.index]): \(String(format: "%.4f", result.score))")
+        print("#\(result.rank) Item \(labels[result.index]): \(String(format: "%.4f", result.score))")
     }
     // Items C, A, E rank highest — they point in a similar direction to the query
 }

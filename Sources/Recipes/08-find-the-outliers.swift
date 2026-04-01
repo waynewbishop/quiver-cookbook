@@ -18,12 +18,16 @@ import Quiver
 
     // Split data using the mask
     let normal = temps.masked(by: mask.not)   // readings within range
-    let flagged = temps.masked(by: mask)               // unusual readings
+    let flagged = temps.masked(by: mask)       // unusual readings
 
-    // Which positions were flagged?
-    let flaggedIndices = mask.trueIndices  // [7, 9]
+    // maskedWithIndices preserves the original position of each
+    // flagged value — useful for chart annotations and reports
+    let outliers = temps.maskedWithIndices(by: mask)
+    // [(index: 7, value: 95.2), (index: 9, value: 38.1)]
 
     print("Normal readings: \(normal)")     // 8 typical temperatures
     print("Outliers:        \(flagged)")     // [95.2, 38.1] — the unusual days
-    print("At positions:    \(flaggedIndices)")
+    for outlier in outliers {
+        print("  Day \(outlier.index): \(outlier.value)")
+    }
 }

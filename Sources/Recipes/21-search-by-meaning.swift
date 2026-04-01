@@ -54,6 +54,6 @@ import Quiver
 
     // "jogging sprint" ranks highest — closest in meaning to "fast running"
     for r in results {
-        print("\(r.label): \(String(format: "%.4f", r.score))")
+        print("#\(r.rank) \(r.label): \(String(format: "%.4f", r.score))")
     }
 }
