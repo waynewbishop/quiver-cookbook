@@ -16,16 +16,16 @@ import Quiver
     // Simulated sensor readings from a car's instruments
     // Each row: [speed in mph, distance to obstacle in meters, lane offset in degrees]
     let telemetry: [[Double]] = [
-        [60, 200, 0], [65, 180, 1], [55, 150, 0],   // open road — safe to accelerate
-        [50, 50, 0],  [45, 30, 2],  [55, 40, 1],     // obstacle approaching — brake
-        [40, 100, 15],[35, 80, 20], [45, 90, 18],     // drifting out of lane — steer back
-        [50, 120, 0], [55, 140, 1], [60, 160, 0]      // steady traffic — maintain speed
+        [60, 200, 0], [65, 180, 1], [55, 150, 0],  // open road — safe to accelerate
+        [50, 120, 0], [55, 140, 1], [60, 160, 0],  // steady traffic — maintain speed
+        [50,  50, 0], [45,  30, 2], [55,  40, 1],  // obstacle approaching — brake
+        [40,  15, 0], [35,  20, 0], [45,  25, 0]   // too close to stop — steer around it
     ]
 
     // Labels: what a human driver did in each scenario
     // In practice, these come from logged driving data or expert annotation
     // 0 = accelerate, 1 = maintain, 2 = brake, 3 = steer
-    let actions = [0, 0, 0, 2, 2, 2, 3, 3, 3, 1, 1, 1]
+    let actions = [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3]
 
     // Scale features so speed (0-65 mph), distance (0-200 m), and
     // lane offset (0-20°) contribute equally to distance calculations
@@ -35,7 +35,7 @@ import Quiver
     // Train on the driving scenarios — K-Nearest Neighbors classifies
     // each new reading by finding the 3 most similar situations it has
     // seen and voting on what the car did in those cases
-    let model = KNearestNeighbors.fit(features: scaled, labels: actions, k: 3)
+    let model = KNearestNeighbors.fit(features: scaled, labels: actions, k: 3, weight: .distance)
     print(model)
 
     // Simulate driving toward an obstacle at 55 mph

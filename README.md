@@ -258,3 +258,4 @@ Have a recipe idea? Found something that could be improved? We'd love your input
 - [Quiver documentation](https://waynewbishop.github.io/quiver/documentation/quiver/) — full API reference and conceptual guides
 - [Swift Algorithms & Data Structures](https://waynewbishop.github.io/swift-algorithms/) — the companion book
 - [Quiver on GitHub](https://github.com/waynewbishop/quiver) — source code, issues, contributions
+- [The Feature Vector](https://featurevector.substack.com) — a newsletter about ML intuition for engineers, built in Swift
