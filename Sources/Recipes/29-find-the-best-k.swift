@@ -21,14 +21,12 @@ import Quiver
     // Run K-Means for k = 1 through 6 and collect inertia scores
     // Inertia = sum of squared distances from each point to its centroid
     // Lower inertia = tighter clusters
-    // TODO: Update to ClosedRange API when 1.1.0 ships:
-    //   KMeans.elbowMethod(data: data, kRange: 1...6, seed: 42)
-    let inertias = KMeans.elbowMethod(data: data, kRange: [1, 2, 3, 4, 5, 6], seed: 42)
+    let inertias = KMeans.elbowMethod(data: data, kRange: 1...6, seed: 42)
 
     // Print the elbow curve
-    for (k, inertia) in inertias.enumerated() {
-        let bar = String(repeating: "█", count: Int(inertia / 5))
-        print("k=\(k + 1): \(String(format: "%6.1f", inertia)) \(bar)")
+    for result in inertias {
+        let bar = String(repeating: "█", count: Int(result.inertia / 5))
+        print("k=\(result.k): \(String(format: "%6.1f", result.inertia)) \(bar)")
     }
 
     // Look for the "elbow" — where inertia drops sharply then levels off

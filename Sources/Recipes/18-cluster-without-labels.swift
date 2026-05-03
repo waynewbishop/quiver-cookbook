@@ -20,7 +20,7 @@ import Quiver
     // Fit: each iteration uses distance(to:) to assign points,
     // then meanVector() to move centroids — the same operations
     // from Recipes 1 and 7, applied in a loop until convergence
-    let model = KMeans.fit(data: data, k: 3, seed: 42)
+    let model = KMeans.fit(data: data, k: 3, seed: 1)
 
     // print() gives a clean summary thanks to CustomStringConvertible
     print(model)  // KMeans: 3 clusters, 9 points, converged in N iterations
