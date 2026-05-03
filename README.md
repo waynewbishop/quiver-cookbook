@@ -21,13 +21,17 @@ Open the project in Xcode 26. Quiver is included as a package dependency and res
 | I want to... | Start with |
 |---|---|
 | Understand vectors and linear algebra | 1, 2, 3, 23 |
-| Build a recommendation or search engine | 4, 5, 6, 21 |
+| Build a recommendation or search engine | 4, 5, 6, 21, 45 |
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
 | Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
-| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33, 36, 37, 38, 39, 40, 41 |
+| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33, 36, 37, 38, 39, 40, 41, 47 |
+| Save and load trained models | 35, 46, 47, 48 |
 | Prepare data for machine learning | 19, 22, 24, 30, 32, 34, 35 |
 | Find patterns in unlabeled data | 6, 18, 29 |
 | Write numerical code without loops | 31 |
+| Analyze signals and frequency | 49, 50, 51, 52, 59 |
+| Fit curves and work with calculus | 53, 54 |
+| Reason with probability and confidence | 55, 56, 57, 58 |
 
 ## Recipes
 
@@ -240,6 +244,84 @@ After a run, resting heart rate rises — a flat easy run might elevate it by 2 
 **42. [Delivery Route Optimizer](Sources/Recipes/42-delivery-route-optimizer.swift)**
 
 A delivery driver with 25 stops and a route card drives them in whatever order they were assigned — often zigzagging across the entire area. This recipe uses K-Means to cluster stops into geographic groups, then shows the stops within each zone sorted by distance from the cluster center. Enterprise route optimization costs hundreds of thousands of dollars. This runs on an iPhone with zero dependencies. Pair with Apple's MapKit for turn-by-turn directions between the optimized sequence of stops.
+
+**43. [True Effort Score](Sources/Recipes/43-true-effort-score.swift)**
+
+Power hiking uphill produces a slow pace and a high heart rate — readings that look contradictory until they're scored against the same effort space. This recipe builds a single composite effort score from heart rate, pace, cadence, and grade, then ranks a sequence of trail-running segments by total physiological cost. The same primitive that ranks documents by cosine similarity ranks workout segments by effort.
+
+**44. [Adaptive Effort Model](Sources/Recipes/44-adaptive-effort-model.swift)**
+
+Generic effort models score everyone the same, but a 200 BPM reading means very different things to different runners. This recipe starts from anchor points that define the corners of an effort space and adapts those anchors to one runner's history. Each new workout shifts the anchors slightly, so the model learns the runner without ever requiring manual calibration.
+
+**45. [Find the Nearest Word](Sources/Recipes/45-find-the-nearest-word.swift)**
+
+Word embeddings live in a dictionary keyed by string, where each value is a vector encoding the word's meaning. Given a target vector — for example, `king − man + woman` — this recipe scores every word in the vocabulary by cosine similarity and returns the top three. The classic analogy lands on `queen` because royalty and gender both turn out to be consistent directions in the vector space.
+
+### Pipelines
+
+**46. [Save and Load a Pipeline](Sources/Recipes/46-save-and-load-a-pipeline.swift)**
+
+A `Pipeline` bundles a fitted scaler with a trained model so they travel together as one `Codable` value. The most common ML mistake is saving a model without its scaler — predictions on new data come out wrong because the scaler is gone. This recipe encodes the scaler-and-model pair into a single JSON blob, decodes it back, and confirms identical predictions with `==`. Sits beside Recipe 35, which covers a bare model without a scaler.
+
+**47. [Pipeline for Linear Regression](Sources/Recipes/47-pipeline-for-linear-regression.swift)**
+
+The same `Pipeline` pattern that wraps a classifier wraps a regressor. `LinearRegression` conforms to the `Regressor` protocol, so a fitted scaler and a fitted regression model encode and decode as one value. This recipe trains on housing-price-shaped data, encodes the pipeline, decodes it, and verifies that predictions match. The `try` is required — the regression overload throws `MatrixError.singular` when features are linearly dependent.
+
+**48. [Train on Mac, Predict on Server](Sources/Recipes/48-train-mac-predict-server.swift)**
+
+A `Pipeline` is a value type, so a model fitted on one machine and decoded on another produces identical predictions. This recipe demonstrates the cross-platform handoff in a single file: encode a fitted pipeline to JSON bytes, simulate writing those bytes to disk by round-tripping through a `Data`, decode on the other side, and verify equality. The pattern shows how a Vapor server loads a model trained on a Mac without retraining at startup.
+
+### Signals and frequency
+
+**49. [Find the Dominant Frequency](Sources/Recipes/49-find-the-dominant-frequency.swift)**
+
+The Fourier transform crosses from the time domain into the frequency domain, revealing which cycles are hidden inside a signal. This recipe builds a synthetic 5 Hz sine wave, centers it by subtracting the mean, and asks `fourierDominantFrequency(sampleRate:windowed:)` for the loudest frequency in the signal — recovering exactly 5 Hz. The "hello world" of frequency analysis.
+
+**50. [Print a Frequency Spectrum](Sources/Recipes/50-print-a-frequency-spectrum.swift)**
+
+A spectrum is the full picture of which frequencies are present in a signal and how strong each one is. `fourierSpectrum(sampleRate:windowed:)` returns parallel frequency-magnitude pairs. This recipe builds a signal with two known sine components, computes the spectrum, and walks the bins to find the strongest peak — confirming the math by recovering one of the two known frequencies.
+
+**51. [Breathing Rate from Heart-Rate Variability](Sources/Recipes/51-breathing-rate-from-heart-rate.swift)**
+
+Respiratory sinus arrhythmia is a small, regular oscillation in heart-rate intervals caused by breathing. The breathing rhythm is hidden inside the R-R interval signal, and the Fourier transform extracts it. This recipe simulates two minutes of R-R intervals at 4 Hz, finds the dominant frequency, and converts to breaths per minute — the same primitive a watchOS app uses to derive a respiratory rate without a dedicated respiratory sensor.
+
+**52. [Stride Frequency from Accelerometer](Sources/Recipes/52-stride-frequency-from-accelerometer.swift)**
+
+Each footstrike during a run shows up as a peak in the accelerometer signal, so the step rate is the dominant frequency of the accelerometer stream. This recipe simulates running at 180 steps per minute (3 Hz), strips the gravity offset by centering, and recovers the cadence with `fourierDominantFrequency(sampleRate:windowed:)`. Same primitive as Recipe 51, different sensor stream.
+
+### Calculus and curve fitting
+
+**53. [Fit a Curve with polyfit](Sources/Recipes/53-fit-a-curve-with-polyfit.swift)**
+
+Linear regression draws a straight line. `polyfit` extends the same idea to nonlinear shapes by fitting a polynomial of any degree. Internally it builds a Vandermonde-style design matrix and defers to `LinearRegression`, so polynomial fitting and the regression model agree by construction. This recipe fits a degree-2 polynomial to points sampled from `2x² + 3x + 1`, recovers the coefficients in ascending order, and evaluates the polynomial at new x values with `callAsFunction`.
+
+**54. [Velocity and Acceleration](Sources/Recipes/54-velocity-and-acceleration.swift)**
+
+Position, velocity, and acceleration are linked by calculus: velocity is the derivative of position, acceleration is the derivative of velocity. Fitting a polynomial to noisy position samples gives a smooth model of motion, and `derivative()` on that polynomial returns the velocity polynomial — analytically, not numerically. Take the derivative once more and we have acceleration. This is what raw `LinearRegression` cannot do.
+
+### Probability and inference
+
+**55. [The Normal Distribution](Sources/Recipes/55-the-normal-distribution.swift)**
+
+`Distributions.normal` exposes the textbook functions of the normal distribution as a stateless namespace. The PDF gives the density at a point, the CDF gives the cumulative probability up to a point, and the quantile function inverts the CDF — given a probability, it returns the value that puts that probability below it. Each returns `Double?` and produces `nil` for out-of-domain inputs rather than crashing. The foundation for every probability-based recipe that follows.
+
+**56. [Confidence Interval for the Mean](Sources/Recipes/56-confidence-interval-for-the-mean.swift)**
+
+A point estimate — "the mean is 84.6" — gives no sense of how reliable that number is. A confidence interval gives the answer honestly: a range that plausibly contains the true mean. This recipe uses the bootstrap — `resampled(iterations:seed:statistic:)` to draw 1,000 resamples with replacement, take the mean of each, and then `percentileCI(level:)` to extract the 2.5th and 97.5th percentiles. Seeded for reproducibility.
+
+**57. [Confidence Interval for the Median](Sources/Recipes/57-confidence-interval-for-the-median.swift)**
+
+The bootstrap is not specific to the mean. The same resampling primitive supports any statistic — median, variance, trimmed mean, or anything expressible as a closure on a `[Double]`. This recipe uses skewed income data where the mean is dragged upward by a few large values and the median better represents the typical case. Building a confidence interval for the median is the right move when the distribution is not symmetric.
+
+**58. [Calibrated Class Probabilities](Sources/Recipes/58-calibrated-class-probabilities.swift)**
+
+`predict(_:)` returns one label per sample — the model's best guess. `predictProbabilities(_:)` returns the full probability distribution across classes for each sample. These calibrated probabilities power cost-sensitive decisions: when a false positive is more expensive than a false negative, we can demand higher confidence before predicting the positive class. This recipe shows that each row sums to 1.0 and tunes a custom decision threshold of 0.7.
+
+### Finite differences
+
+**59. [Grade from Elevation](Sources/Recipes/59-grade-from-elevation.swift)**
+
+`derivative(sampleRate:)` is the finite-difference operator — it divides consecutive differences by the sample interval. The result has one fewer element than the input because each output is the rate of change between two adjacent samples. The same operator that converts elevation to grade also converts speed to acceleration; one primitive serves both signals on the kind of sensor stream a watchOS workout app records every second.
 
 ## Companion book
 
