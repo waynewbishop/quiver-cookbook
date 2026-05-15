@@ -10,7 +10,7 @@ import Quiver
 
     // Generate 50 values from a normal distribution
     // mean = 100, std = 15 — like IQ scores
-    let data = [Double].randomNormal(50, mean: 100.0, std: 15.0)
+    let data = [Double].randomNormal(50, mean: 100.0, standardDeviation: 15.0)
 
     // Group into 5 bins — each bin covers an equal range
     let bins = data.histogram(bins: 5)

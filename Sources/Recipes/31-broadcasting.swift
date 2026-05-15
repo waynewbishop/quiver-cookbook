@@ -28,7 +28,7 @@ import Quiver
     // each value sits from the mean
     let scores = [72.0, 85.0, 91.0, 68.0, 95.0]
     let mean = scores.mean() ?? 0
-    let std = scores.std() ?? 0
+    let std = scores.standardDeviation() ?? 0
     let zScores = (scores - mean) / std
     print("Z-scores: \(zScores)")
 }

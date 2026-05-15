@@ -15,8 +15,8 @@ import Quiver
     let mid = scores.median()   // ~83.5 — the middle value (less sensitive to extremes)
 
     // Spread — how much variation exists?
-    let sd = scores.std()       // ~9.7 — typical distance from the mean
-    let v = scores.variance()   // ~93.5 — standard deviation squared
+    let sd = scores.standardDeviation()  // ~9.86 — typical distance from the mean
+    let v = scores.variance()   // ~97.30 — standard deviation squared
 
     // Distribution — where do the boundaries fall?
     // Quartiles divide data into four equal groups

@@ -28,7 +28,7 @@ import Quiver
 
     // Random arrays — simulate data for testing and experimentation
     // Normal distribution: values cluster around the mean
-    let samples = [Double].randomNormal(10, mean: 70.0, std: 10.0)
+    let samples = [Double].randomNormal(10, mean: 70.0, standardDeviation: 10.0)
     print("Random normal: \(samples)")
     print("Mean: \(samples.mean() ?? 0)")
 
