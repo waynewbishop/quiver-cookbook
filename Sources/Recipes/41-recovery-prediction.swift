@@ -40,4 +40,11 @@ import Quiver
     let flatRun = [[88.0, 5, 5, 248, 275]]
     let flatPrediction = model.predict(flatRun)
     print("Same RSS, flat run:    +\(String(format: "%.0f", flatPrediction[0])) BPM")
+
+    // summary() reports which features actually drove the prediction.
+    // With only 8 training samples no coefficient will be confidently
+    // non-zero, which is itself the lesson: small training sets give
+    // wide confidence intervals. Hold out a test set in production.
+    let report = try model.summary(features: history, targets: hrElevation)
+    print(report)
 }

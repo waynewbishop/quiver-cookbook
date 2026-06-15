@@ -33,12 +33,13 @@ import Quiver
 
         // Predict: what would a 1800 sqft, 3 bed, 6 year old house sell for?
         let prediction = model.predict([[1800.0, 3.0, 6.0]])
-
-        // How well does the model fit? R² = 1.0 is perfect, 0.0 is no fit
-        let predicted = model.predict(features)
-        let r2 = predicted.rSquared(actual: prices)
-
         print("Predicted price: $\(String(format: "%.1f", prediction[0]))K")
-        print("R² score: \(String(format: "%.4f", r2))")
+
+        // summary() returns a typed RegressionSummary with R², MSE, RMSE,
+        // plus t-statistics, p-values, and 95% confidence intervals for
+        // every coefficient. The full inferential picture in one call.
+        if let report = try? model.summary(features: features, targets: prices) {
+            print(report)
+        }
     }
 }

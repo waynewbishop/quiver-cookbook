@@ -18,6 +18,14 @@ import Quiver
     // print() gives a clean one-line summary
     print(cm)  // TP: 4  FP: 1  TN: 4  FN: 1  (accuracy: 80.0%)
 
-    // classificationReport() shows per-class metrics with averages
-    print(predicted.classificationReport(actual: actual))
+    // classificationReport() returns a typed ClassificationReport —
+    // per-class precision, recall, F1, and support in one structured
+    // value. Print it for the formatted table, or access individual
+    // metrics programmatically.
+    let report = predicted.classificationReport(actual: actual)
+    print(report)
+    print("Accuracy: \(String(format: "%.3f", report.accuracy))")
+    if let macroF1 = report.macroAverage.f1Score {
+        print("Macro F1: \(String(format: "%.3f", macroF1))")
+    }
 }

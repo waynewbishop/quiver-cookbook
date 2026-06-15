@@ -7,6 +7,12 @@ import Quiver
 // data point, it evaluates the Gaussian probability density function
 // (built from exp() and the statistics) and picks the class with
 // the highest probability. The math is familiar; the application is ML.
+//
+// One subtlety worth naming: Naive Bayes internally uses the
+// population variance (ddof = 0) because each class is treated as
+// its own complete population. Recipe 7's standardDeviation() uses
+// the sample variance (ddof = 1) by default. Same formula family,
+// different denominator. Both are correct in their context.
 
 #Playground("Classify with Naive Bayes") {
 

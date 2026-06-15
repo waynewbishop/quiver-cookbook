@@ -1,12 +1,12 @@
-# The Quiver Cookbook — Vector Mathematics, Statistics, and ML Models in Swift
+# The Quiver Cookbook — Statistics, Linear Algebra, and Machine Learning in Swift
 
-The cookbook comprises interactive recipes for learning vector mathematics, numerical computing, and machine learning in Swift. Designed for developers exploring the math behind machine learning, recommendation engines, and data analysis. Each recipe is a single `.swift` file that runs interactively inside Xcode as a playground macro. This lightweight model allows developers to quickly test, learn and experiment with the Quiver API. 
+The cookbook comprises interactive recipes for learning statistics, linear algebra, and machine learning in Swift. Designed for developers exploring the math behind machine learning, recommendation engines, and data analysis. Each recipe is a single `.swift` file that runs interactively inside Xcode as a playground macro. This lightweight model allows developers to quickly test, learn and experiment with the Quiver API. 
 
 ## What is Quiver?
 
-[Quiver](https://github.com/waynewbishop/quiver) expands the Swift ecosystem with a pure, Swift-first approach to vector mathematics and numerical computing. Built as an extension on the standard `Array` type, the framework embraces Swift's emphasis on readability and expressiveness, offering mathematical operations that feel natural to iOS and macOS developers.
+[Quiver](https://github.com/waynewbishop/quiver) expands the Swift ecosystem with a pure, Swift-first approach to statistics, linear algebra, and machine learning. Built as an extension on the standard `Array` type, the framework embraces Swift's emphasis on readability and expressiveness, offering mathematical operations that feel natural to iOS and macOS developers.
 
-As a pure Swift library with zero external dependencies, Quiver runs on every Apple platform — iOS, macOS, watchOS, tvOS, and visionOS — as well as server-side Swift, Linux environments, and containerized deployments. Quiver is ideal for teaching environments, on-device processing, and any context where minimal dependencies and platform portability matter.
+As a pure Swift library with zero external dependencies, Quiver runs on every Apple platform — iOS, macOS, watchOS, tvOS, and visionOS — as well as server-side Swift, Linux environments, and containerized deployments. Quiver is ideal for [teaching environments](https://github.com/waynewbishop/quiver-notebook), on-device processing, and any context where minimal dependencies and platform portability matter.
 
 ## Getting started
 
@@ -24,14 +24,16 @@ Open the project in Xcode 26. Quiver is included as a package dependency and res
 | Build a recommendation or search engine | 4, 5, 6, 21, 45 |
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
 | Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
-| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33, 36, 37, 38, 39, 40, 41, 47 |
+| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33, 36, 37, 38, 39, 40, 41, 47, 60, 72 |
 | Save and load trained models | 35, 46, 47, 48 |
 | Prepare data for machine learning | 19, 22, 24, 30, 32, 34, 35 |
 | Find patterns in unlabeled data | 6, 18, 29 |
 | Write numerical code without loops | 31 |
 | Analyze signals and frequency | 49, 50, 51, 52, 59 |
 | Fit curves and work with calculus | 53, 54 |
-| Reason with probability and confidence | 55, 56, 57, 58 |
+| Reason with probability and confidence | 55, 56, 57, 58, 61, 62, 63, 65, 66, 67, 68 |
+| Detect distribution shape | 64 |
+| Simulate random data | 30, 69, 70, 71 |
 
 ## Recipes
 
@@ -322,6 +324,60 @@ The bootstrap is not specific to the mean. The same resampling primitive support
 **59. [Grade from Elevation](Sources/Recipes/59-grade-from-elevation.swift)**
 
 `derivative(sampleRate:)` is the finite-difference operator — it divides consecutive differences by the sample interval. The result has one fewer element than the input because each output is the rate of change between two adjacent samples. The same operator that converts elevation to grade also converts speed to acceleration; one primitive serves both signals on the kind of sensor stream a watchOS workout app records every second.
+
+### Inferential statistics
+
+**60. [Read a Regression Summary](Sources/Recipes/60-read-a-regression-summary.swift)**
+
+A fitted regression has more to tell us than a single R². For every coefficient, `summary()` reports its standard error, a t-statistic (how many standard errors the estimate sits from zero), a two-tailed p-value, and a 95% confidence interval. Together these answer the question "is this slope real, or could it be noise?" — the inferential heart of regression. This recipe prints the full `RegressionSummary` struct and accesses individual fields programmatically.
+
+**61. [Standard Error vs Standard Deviation](Sources/Recipes/61-standard-error-vs-standard-deviation.swift)**
+
+The standard deviation describes the data — how far values spread from the sample mean. The standard error describes the estimate — how much the sample mean itself would wobble if we drew another sample of the same size. `SE = SD / √n`, so the standard error always shrinks as the sample grows; the standard deviation does not. Mixing the two is the most common statistical mistake in applied work, and this recipe makes the distinction concrete.
+
+**62. [One-Sample t-Test](Sources/Recipes/62-one-sample-t-test.swift)**
+
+We hypothesize the class mean is 12 and observe a sample with mean 12.5. Is the gap large enough to reject the hypothesis, or could it be sampling noise? The one-sample t-test combines the sample mean, the standard error, and the t-distribution's cumulative probability into a single p-value. `standardError()` and `Distributions.t.cdf(x:df:)` supply the two primitives; the recipe assembles them into a complete hypothesis test.
+
+**63. [Chi-Squared Goodness of Fit](Sources/Recipes/63-chi-squared-goodness-of-fit.swift)**
+
+We rolled a die 60 times. If the die is fair, each face should appear about 10 times. The chi-squared goodness-of-fit statistic summarizes how far observed counts drifted from expected counts, and the chi-squared distribution's CDF turns that summary into a p-value. Small p means the die looks rigged. The recipe uses `Distributions.chiSquared.cdf(x:df:)` to perform the canonical categorical-data hypothesis test.
+
+**64. [Bimodal Detection with mode()](Sources/Recipes/64-bimodal-detection-with-mode.swift)**
+
+Some distributions are bimodal — two clusters share the highest frequency. A scalar mode would silently pick one. Quiver's `mode()` returns `[Element]`, so the two-headed shape surfaces as a multi-element array. The recipe mixes two height populations into one dataset and shows that `mode()` returns both peak values, paired with a histogram that makes the two-cluster shape visible.
+
+**65. [Parametric CI for the Mean](Sources/Recipes/65-parametric-ci-for-the-mean.swift)**
+
+The bootstrap confidence interval (Recipe 56) makes no distributional assumption. The parametric confidence interval does — it assumes the sample mean follows a t-distribution — but pays off in shorter code and exact coverage when the assumption holds. The formula is `mean ± t_critical · standard_error`. Use this recipe when the sample is reasonably symmetric; fall back to bootstrap when it is not.
+
+**66. [Sampling Distribution of the Median](Sources/Recipes/66-sampling-distribution-of-the-median.swift)**
+
+The mean's sampling distribution is the Central Limit Theorem's canonical illustration. The median has its own sampling distribution — and on symmetric data, it is wider than the mean's at the same sample size. That is the quantitative version of "the mean is the more statistically efficient summary on symmetric data." The recipe uses `samplingDistributionOfMean` and `samplingDistributionOfMedian` side by side to make the spread comparison concrete.
+
+**67. [Sampling Distribution of the Standard Deviation](Sources/Recipes/67-sampling-distribution-of-standard-deviation.swift)**
+
+Sample standard deviations have their own sampling distribution, which is skewed for small samples and noisier than the mean's. The recipe sweeps three sample sizes (10, 50, 200), bootstraps 1,000 sample SDs at each size, and reports the spread. The lesson lands on its own: sample SDs cluster more tightly around the true population SD as the sample grows, but slower than sample means do.
+
+**68. [Central Limit Theorem for a Non-Normal Source](Sources/Recipes/68-clt-for-a-non-normal-source.swift)**
+
+The Central Limit Theorem holds even when the source population is wildly non-normal. The recipe builds a heavily skewed exponential population (most values small, long right tail), draws 1,000 samples of size 100, and records each sample's mean. The histogram of sample means is bell-curved, regardless of the skewed source. The CLT's claim, made physical.
+
+**69. [Inter-Arrival Times with randomExponential](Sources/Recipes/69-inter-arrival-times.swift)**
+
+Server requests, user events, customer arrivals — when events happen at a steady average rate but with random spacing, the gaps between them follow an exponential distribution. The mean gap is `1/rate`. This recipe uses `randomExponential` to simulate realistic arrival patterns for load testing or capacity modeling, and shows the memoryless property: some requests arrive back-to-back while others have long gaps.
+
+**70. [A/B Test with randomBinomial](Sources/Recipes/70-ab-test-with-randombinomial.swift)**
+
+Variant A converts at 4%. Variant B converts at 5%. With 1,000 visitors per variant, will we reliably see the difference, or will it get lost in sampling noise? The recipe simulates 500 experiments by drawing from a binomial distribution and counting how often B beats A. The result is sobering — even with a true 25% relative lift, B beats A in only about 65% of single experiments. One run can easily mislead.
+
+**71. [Reproducibility with a Seeded RNG](Sources/Recipes/71-reproducibility-with-a-seeded-rng.swift)**
+
+Random work that grades, debugs, or publishes needs to be reproducible. `SeededRandomNumberGenerator` is a struct conforming to `RandomNumberGenerator` — pass it by `inout` to every random method and two runs with the same seed produce identical sequences. The recipe shows that determinism holds across the entire Quiver random surface (normal, exponential, binomial) and the Swift standard library's `using:` overloads (`shuffled`, etc.).
+
+**72. [Gradient Descent on House Prices](Sources/Recipes/72-gradient-descent-on-house-prices.swift)**
+
+`LinearRegression` solves the normal equation in one matrix expression. `GradientDescent` walks to the same minimum one iteration at a time. The recipe fits a line to house prices both ways on standardized features, prints the two coefficient vectors side by side, and shows the loss trajectory falling toward the closed-form answer. Watching the agreement happen is how the iterative route earns the trust it will need for models — logistic regression next — where no closed form exists.
 
 ## Companion book
 

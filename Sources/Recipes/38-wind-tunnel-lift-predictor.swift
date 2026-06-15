@@ -21,18 +21,21 @@ import Quiver
 
     // Simulated wind tunnel readings for a NACA 2412 airfoil
     // Angle of attack (degrees) → measured lift coefficient
-    let angle =  [0.0,  2.0,  4.0,  6.0,  8.0, 10.0]
+    let angles: [[Double]] = [[0.0], [2.0], [4.0], [6.0], [8.0], [10.0]]
     let liftCL = [0.25, 0.47, 0.69, 0.90, 1.10, 1.30]
 
     // Train a regression model on the wind tunnel data
-    let model = try LinearRegression.fit(features: angle, targets: liftCL)
+    let model = try LinearRegression.fit(features: angles, targets: liftCL)
     print(model)
 
     // Predict lift at an angle the tunnel hasn't tested
-    let predicted = model.predict([7.0])
+    let predicted = model.predict([[7.0]])
     print("Angle: 7° → CL: \(String(format: "%.2f", predicted[0]))")
 
-    // How well does the linear model fit?
-    let r2 = model.predict(angle).rSquared(actual: liftCL)
-    print("R²: \(String(format: "%.4f", r2))")
+    // Is the slope statistically distinguishable from zero, or could the
+    // fit be noise? summary() returns a typed RegressionSummary with the
+    // t-statistic, p-value, and 95% confidence interval for every
+    // coefficient — the engineer's answer to "is this real?"
+    let report = try model.summary(features: angles, targets: liftCL)
+    print(report)
 }

@@ -8,9 +8,9 @@ import Foundation
 // hidden inside the data. The "hello world" of frequency analysis
 // is recovering a known frequency from a synthetic sine wave.
 // We center the signal by subtracting the mean (so the DC component
-// stays out of the answer) and let `fourierDominantFrequency` find
-// the strongest cycle. The `windowed: true` flag applies a Hann
-// window to reduce spectral leakage on finite signals.
+// stays out of the answer) and read the strongest cycle off the
+// `powerSpectralDensity` spectrum. The `windowed: true` flag applies a
+// Hann window to reduce spectral leakage on finite signals.
 
 #Playground("Find the Dominant Frequency in a Signal") {
 
@@ -25,9 +25,9 @@ import Foundation
     let centered = signal - mean
 
     // Recover the dominant frequency, with windowing for cleaner edges
-    guard let dominant = centered.fourierDominantFrequency(
+    guard let dominant = centered.powerSpectralDensity(
         sampleRate: sampleRate, windowed: true
-    ) else { return }
+    )?.dominantFrequency else { return }
 
     print("Dominant frequency: \(dominant) Hz")  // ≈ 5.0 Hz
 }

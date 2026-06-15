@@ -26,9 +26,9 @@ import Foundation
     let centered = acceleration - baseline
 
     // Find the footstrike frequency and convert to cadence
-    guard let stepHz = centered.fourierDominantFrequency(
+    guard let stepHz = centered.powerSpectralDensity(
         sampleRate: sampleRate, windowed: true
-    ) else { return }
+    )?.dominantFrequency else { return }
 
     let cadence = stepHz * 60.0
     print("Step frequency: \(String(format: "%.2f", stepHz)) Hz")

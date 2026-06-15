@@ -22,8 +22,16 @@ import Quiver
     // head() shows the actual data in tabular format
     print(data.head(n: 5))
 
-    // summary() gives per-column summary statistics
-    print(data.summary())
+    // summary() returns a typed PanelSummary across every column —
+    // count, mean, std (sample, ddof=1), min, max. Print it directly
+    // for the formatted table, or access individual ColumnSummary
+    // structs by column name.
+    let report = data.summary()
+    print(report)
+    if let incomeStats = report.columns["income"] {
+        print("Income mean: \(incomeStats.mean)")
+        print("Income std:  \(incomeStats.std)")
+    }
 
     // Access a single column by name
     let ages = data["age"]        // [25.0, 45.0, 35.0, ...]

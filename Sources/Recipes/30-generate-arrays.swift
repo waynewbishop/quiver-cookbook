@@ -32,6 +32,22 @@ import Quiver
     print("Random normal: \(samples)")
     print("Mean: \(samples.mean() ?? 0)")
 
+    // Exponential distribution: long right tail, most values small
+    // Rate = 1.0 means the population mean is 1/rate = 1.0
+    let waits = [Double].randomExponential(10, rate: 1.0)
+    print("Random exponential: \(waits)")
+
+    // Binomial distribution: count of successes in n Bernoulli trials
+    // Useful for A/B-testing simulations and conversion-rate work
+    let trials = [Double].randomBinomial(10, n: 100, p: 0.3)
+    print("Random binomial: \(trials)")
+
+    // Reproducibility: pass a SeededRandomNumberGenerator and two runs
+    // with the same seed produce identical sequences
+    var rng = SeededRandomNumberGenerator(seed: 42)
+    let seeded = [Double].randomNormal(5, mean: 0, standardDeviation: 1, using: &rng)
+    print("Seeded normal: \(seeded)")
+
     // 2D arrays — matrices initialized with zeros or ones
     let matrix = [Double].zeros(3, 4)  // 3 rows × 4 columns of zeros
     print("Matrix shape: \(matrix.count) × \(matrix[0].count)")

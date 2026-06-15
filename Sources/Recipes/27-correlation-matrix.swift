@@ -13,12 +13,18 @@ import Quiver
     let temperature = [75.0, 80.0, 85.0, 70.0, 90.0]
     let iceCreamSales = [200.0, 240.0, 300.0, 180.0, 320.0]
 
+    // Pairwise Pearson correlation — one number, two arrays.
+    // The result is bounded in [-1, 1], symmetric, and unit-free.
+    // It returns nil when a variable has no spread (correlation is undefined).
+    guard let r = temperature.correlation(with: iceCreamSales) else { return }
+    print("Pairwise correlation: \(String(format: "%.4f", r))")  // ≈ 0.9866
+
     // Correlation matrix: compare every variable against every other
     // The result is a square matrix — diagonal is always 1.0 (perfect self-correlation)
     let corr = [temperature, iceCreamSales].correlationMatrix()
 
     // corr[0][0] = 1.0 (temperature vs itself)
-    // corr[0][1] = temperature vs ice cream sales (~0.98 — strong positive)
+    // corr[0][1] = temperature vs ice cream sales (~0.99 — strong positive)
     // corr[1][0] = same as [0][1] (symmetric)
     // corr[1][1] = 1.0 (ice cream vs itself)
 

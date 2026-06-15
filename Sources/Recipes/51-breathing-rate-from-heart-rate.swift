@@ -26,9 +26,9 @@ import Foundation
     let centered = rrSignal - baseline
 
     // Find the breathing frequency in Hz, convert to breaths per minute
-    guard let frequencyHz = centered.fourierDominantFrequency(
+    guard let frequencyHz = centered.powerSpectralDensity(
         sampleRate: sampleRate, windowed: true
-    ) else { return }
+    )?.dominantFrequency else { return }
 
     let breathsPerMinute = frequencyHz * 60.0
     print("Breathing frequency: \(String(format: "%.3f", frequencyHz)) Hz")
