@@ -56,4 +56,8 @@ import Quiver
     for r in results {
         print("#\(r.rank) \(r.label): \(String(format: "%.4f", r.score))")
     }
+
+    // Once the mechanics are clear, the Embedder protocol collapses
+    // this whole pipeline behind one contract — see Recipe 77 for
+    // embedded(using:) and mostSimilar(to:k:).
 }

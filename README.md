@@ -115,6 +115,18 @@ Gaussian Naive Bayes learns the mean and variance of each feature for each class
 
 K-Nearest Neighbors stores the entire training set and classifies new points by measuring distance to every training example, finding the K closest, and taking a majority vote. No parameters are learned — the data itself is the model. This makes training instant but prediction slower on large datasets. The choice of K controls sensitivity: small K follows noise, large K smooths boundaries.
 
+**73. [Classify with Logistic Regression](Sources/Recipes/73-classify-with-logistic-regression.swift)**
+
+Naive Bayes counts statistics and K-Nearest Neighbors stores points and votes — logistic regression is the first classifier that actually *learns* a decision boundary, fitting coefficients by gradient descent on cross-entropy loss. It predicts a yes-or-no outcome, the most common classification task in applied machine learning, and exposes its coefficients through the same protocol as linear regression. This completes the classification arc: a lazy learner (KNN), a statistical learner (Naive Bayes), and a discriminative learner (logistic regression).
+
+**74. [Predict Class Probabilities](Sources/Recipes/74-predict-class-probabilities.swift)**
+
+A class label answers "which side?" — but often we want the confidence behind that answer. Logistic regression produces a probability between 0 and 1 for the positive class, so we can decide how sure the model must be before acting on its prediction. This recipe reads those probabilities and shows how raising the decision threshold — only act when the model is at least 80% sure — is one line on top of them, with no retraining.
+
+**75. [Find the Decision Boundary](Sources/Recipes/75-find-the-decision-boundary.swift)**
+
+Before logistic regression squashes a score into a probability, it computes a raw linear score: the decision function. That score is the geometric heart of the classifier — its sign is the predicted class, and the point where it crosses zero is the decision boundary. Reading the score directly shows how far a sample sits from that boundary, making "a classifier draws a line" literal rather than abstract.
+
 **18. [Cluster Without Labels](Sources/Recipes/18-cluster-without-labels.swift)**
 
 K-Means is an unsupervised algorithm — it finds natural groupings in data that has no labels. You specify how many clusters (K) to look for. The algorithm assigns each point to the nearest centroid, recalculates centroids as the mean of each cluster's members, and repeats until assignments stabilize. It's how customer segmentation, image compression, and anomaly detection work when you have data but no predefined categories.
@@ -132,6 +144,10 @@ The most important rule in machine learning: never evaluate a model on the same 
 **21. [Search by Meaning](Sources/Recipes/21-search-by-meaning.swift)**
 
 Traditional search matches keywords — if you search "fast running," it only finds documents containing those exact words. Semantic search matches meaning — "jogging sprint" ranks highly because it means something similar, even though it shares no words with the query. This recipe builds the full pipeline: tokenize text into words, look up each word's vector representation, average them into a document vector, then rank a catalog by cosine similarity.
+
+**77. [Rank by Meaning, Any Source](Sources/Recipes/77-rank-by-meaning-any-source.swift)**
+
+Recipe 21 hand-rolls the search pipeline; this one shows what the `Embedder` protocol abstracts away. By naming the text-to-vector conversion as a single contract, the ranking code stops caring where the vectors come from — `embedded(using:)` and `mostSimilar(to:k:)` handle the rest. Swap a word-vector table for an on-device sentence model and the ranking is untouched. This is the swappable-source pattern behind production semantic search and retrieval.
 
 ### Data organization
 
@@ -160,6 +176,10 @@ Accuracy alone can be misleading — if 95% of emails are not spam, a model that
 **26. [Evaluate a Regression Model](Sources/Recipes/26-evaluate-a-regression.swift)**
 
 A classifier is right or wrong. A regression model is close or far — so we measure how far off the predictions are. R² tells us how much variation the model explains (1.0 = perfect, 0.0 = useless). MSE penalizes large errors heavily by squaring the differences. RMSE converts back to the original units so we can say "on average, predictions are off by about $4K." Together these three metrics tell the full story of a regression model's quality.
+
+**76. [Analyze Regression Residuals](Sources/Recipes/76-analyze-regression-residuals.swift)**
+
+Aggregate metrics like R² summarize a fit in one number; residuals show it point by point. A residual is observed minus expected — the gap a prediction left behind — and reading residuals is the standard diagnostic step: small, patternless residuals mean the model captured the signal, while a large one flags a point it could not explain. `ResidualModel` wraps any fitted regressor and reports that gap, turning a trained model into a diagnostic.
 
 **27. [Correlation Matrix](Sources/Recipes/27-correlation-matrix.swift)**
 
@@ -229,14 +249,6 @@ A wing's lift coefficient increases linearly with the angle of attack — the an
 
 ### Athletics & Motion
 
-**39. [True Effort Classification](Sources/Recipes/39-true-effort-classification.swift)**
-
-A heart rate of 160 BPM means different things depending on context. Running uphill at a slow pace is harder than cruising downhill at the same heart rate. This recipe trains a K-Nearest Neighbors model on four sensor signals — heart rate, cadence, pace, and elevation change — to classify true effort, not just heart rate zones. The key insight: rows with HR at 160 are classified as "Easy" because the model sees the slow pace and downhill grade. A traditional HR zone model would call that Zone 4.
-
-**40. [Running Stress Breakdown](Sources/Recipes/40-running-stress-breakdown.swift)**
-
-Training stress scores condense an entire run into one number. That number is useful for tracking load over time, but it hides the story. This recipe computes an overall stress score then uses K-Means to decompose the run into effort clusters — revealing whether the stress came from flat cruising, uphill grinding, or downhill impact. Same score, very different recovery implications. No consumer fitness platform offers this decomposition.
-
 **41. [Recovery Prediction](Sources/Recipes/41-recovery-prediction.swift)**
 
 After a run, resting heart rate rises — a flat easy run might elevate it by 2 BPM overnight, while a hard hilly run might push it up 8 BPM. This recipe trains a linear regression model on historical run profiles to predict next-morning HR elevation — a proxy for recovery load that the watch measures automatically. No manual entry, no subjective guessing. The insight: two runs with the same stress score produce different overnight HR elevation because uphill grinding costs more recovery than flat cruising.
@@ -246,14 +258,6 @@ After a run, resting heart rate rises — a flat easy run might elevate it by 2 
 **42. [Delivery Route Optimizer](Sources/Recipes/42-delivery-route-optimizer.swift)**
 
 A delivery driver with 25 stops and a route card drives them in whatever order they were assigned — often zigzagging across the entire area. This recipe uses K-Means to cluster stops into geographic groups, then shows the stops within each zone sorted by distance from the cluster center. Enterprise route optimization costs hundreds of thousands of dollars. This runs on an iPhone with zero dependencies. Pair with Apple's MapKit for turn-by-turn directions between the optimized sequence of stops.
-
-**43. [True Effort Score](Sources/Recipes/43-true-effort-score.swift)**
-
-Power hiking uphill produces a slow pace and a high heart rate — readings that look contradictory until they're scored against the same effort space. This recipe builds a single composite effort score from heart rate, pace, cadence, and grade, then ranks a sequence of trail-running segments by total physiological cost. The same primitive that ranks documents by cosine similarity ranks workout segments by effort.
-
-**44. [Adaptive Effort Model](Sources/Recipes/44-adaptive-effort-model.swift)**
-
-Generic effort models score everyone the same, but a 200 BPM reading means very different things to different runners. This recipe starts from anchor points that define the corners of an effort space and adapts those anchors to one runner's history. Each new workout shifts the anchors slightly, so the model learns the runner without ever requiring manual calibration.
 
 **45. [Find the Nearest Word](Sources/Recipes/45-find-the-nearest-word.swift)**
 
