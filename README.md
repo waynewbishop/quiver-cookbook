@@ -22,6 +22,7 @@ Open the project in Xcode 26. Quiver is included as a package dependency and res
 |---|---|
 | Understand vectors and linear algebra | 1, 2, 3, 23 |
 | Build a recommendation or search engine | 4, 5, 6, 21, 45 |
+| Build retrieval for a language model | 77, 78, 79 |
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
 | Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
 | Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33, 36, 37, 38, 39, 40, 41, 47, 60, 72 |
@@ -148,6 +149,14 @@ Traditional search matches keywords — if you search "fast running," it only fi
 **77. [Rank by Meaning, Any Source](Sources/Recipes/77-rank-by-meaning-any-source.swift)**
 
 Recipe 21 hand-rolls the search pipeline; this one shows what the `Embedder` protocol abstracts away. By naming the text-to-vector conversion as a single contract, the ranking code stops caring where the vectors come from — `embedded(using:)` and `mostSimilar(to:k:)` handle the rest. Swap a word-vector table for an on-device sentence model and the ranking is untouched. This is the swappable-source pattern behind production semantic search and retrieval.
+
+**78. [Retrieve a Passage for a Question](Sources/Recipes/78-retrieve-a-passage-for-a-question.swift)**
+
+Retrieval scales semantic search from a catalog of phrases to a document: a `Chunker` cuts the document into fragments, an `Embedder` turns each fragment into a vector, and an `EmbeddingIndex` embeds the corpus once at ingest and ranks it against any question. This is the half of retrieval-augmented generation that Quiver owns — the top chunks become the context a language model answers from. The question "what temperature to bake at" retrieves the chunk about a hot oven even though the two share no words, because "temperature" sits near "hot", "oven", and "heat" in embedding space.
+
+**79. [Decide When Retrieval Is Good Enough](Sources/Recipes/79-decide-when-retrieval-is-good-enough.swift)**
+
+Retrieval always returns something — even an off-topic question gets a ranked list, and handing weak context to a language model invites a confident wrong answer. `RetrievalResult` keeps the full score field visible (mean, spread, top score, top z-score), and `isAboveGate(floor:outlierZ:)` composes two checks: the top hit is good on its own terms, or it stands clearly above the rest of the field. The thresholds are deliberately the caller's policy — Quiver supplies the composition, never the cutoff. When the gate fails, the honest move is to say "I don't know" instead of answering from noise.
 
 ### Data organization
 

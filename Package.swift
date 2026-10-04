@@ -9,7 +9,7 @@ let package = Package(
         .iOS(.v15)
     ],
     dependencies: [
-        .package(url: "https://github.com/waynewbishop/quiver.git", from: "1.4.0")
+        .package(url: "https://github.com/waynewbishop/quiver.git", from: "1.5.0")
     ],
     targets: [
         .target(
