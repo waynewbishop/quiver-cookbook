@@ -1,12 +1,18 @@
-# The Quiver Cookbook — Statistics, Linear Algebra, and Machine Learning in Swift
+# Quiver Cookbook — Statistics, Linear Algebra & Machine Learning in Swift
 
-The cookbook comprises interactive recipes for learning statistics, linear algebra, and machine learning in Swift. Designed for developers exploring the math behind machine learning, recommendation engines, and data analysis. Each recipe is a single `.swift` file that runs interactively inside Xcode as a playground macro. This lightweight model allows developers to quickly test, learn and experiment with the Quiver API. 
+[![Swift](https://img.shields.io/badge/Swift-6-orange)](https://swift.org)
+[![Recipes](https://img.shields.io/badge/recipes-73-blue)](Sources/Recipes)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
-## What is Quiver?
+73 interactive recipes for learning statistics, linear algebra, and machine learning in Swift with [Quiver](https://github.com/waynewbishop/quiver). Each recipe is a single `.swift` file that runs interactively inside Xcode using the `#Playground` macro — results appear inline as you type. No setup, no datasets to download, no loops unless the loop is the lesson.
 
-[Quiver](https://github.com/waynewbishop/quiver) expands the Swift ecosystem with a pure, Swift-first approach to statistics, linear algebra, and machine learning. Built as an extension on the standard `Array` type, the framework embraces Swift's emphasis on readability and expressiveness, offering mathematical operations that feel natural to iOS and macOS developers.
+Several recipes are the working building blocks behind [True Effort Score](https://waynewbishop.github.io/quiver/documentation/quiver/true-effort-score), Quiver's training-load model for Apple Watch — recovery prediction (41), breathing rate and stride frequency (51), grade from elevation (59) — and Recipe 80 scores a run with the model itself.
 
-As a pure Swift library with zero external dependencies, Quiver runs on every Apple platform — iOS, macOS, watchOS, tvOS, and visionOS — as well as server-side Swift, Linux environments, and containerized deployments. Quiver is ideal for [teaching environments](https://github.com/waynewbishop/quiver-notebook), on-device processing, and any context where minimal dependencies and platform portability matter.
+## Who the Cookbook is for
+
+- **Students** learning the math behind machine learning, recommendation engines, and data analysis — each recipe teaches one concept end to end, in code you can poke at.
+- **Educators** looking for classroom-ready examples with real-world framing — every recipe is a self-contained demonstration with a motivating scenario.
+- **Apple-platform developers** exploring the Quiver API — recipes are the fastest way to test an idea, learn an idiom, or verify how a model behaves before integrating it.
 
 ## Getting started
 
@@ -15,6 +21,8 @@ git clone https://github.com/waynewbishop/quiver-cookbook.git
 ```
 
 Open the project in Xcode 26. Quiver is included as a package dependency and resolves automatically — no manual setup. Browse `Sources/Recipes/`, pick a file, and run it. Each recipe uses the `#Playground` macro, which shows results inline as you type.
+
+Recipe numbers are stable identifiers — new recipes keep their original numbers wherever they land, so gaps in the sequence are normal.
 
 ## Quick reference — by use case
 
@@ -25,16 +33,18 @@ Open the project in Xcode 26. Quiver is included as a package dependency and res
 | Build retrieval for a language model | 77, 78, 79 |
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
 | Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
-| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 33, 36, 37, 38, 39, 40, 41, 47, 60, 72 |
-| Save and load trained models | 35, 46, 47, 48 |
+| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 36, 37, 38, 41, 47, 60, 72, 73, 76 |
+| Save and load trained models | 35, 46, 47 |
 | Prepare data for machine learning | 19, 22, 24, 30, 32, 34, 35 |
+| Compress a dataset with PCA | 81 |
 | Find patterns in unlabeled data | 6, 18, 29 |
 | Write numerical code without loops | 31 |
-| Analyze signals and frequency | 49, 50, 51, 52, 59 |
+| Analyze signals and frequency | 49, 50, 51, 59 |
+| Score a workout with True Effort Score | 41, 51, 59, 80 |
 | Fit curves and work with calculus | 53, 54 |
-| Reason with probability and confidence | 55, 56, 57, 58, 61, 62, 63, 65, 66, 67, 68 |
+| Reason with probability and confidence | 55, 56, 58, 61, 62, 63, 65, 66, 67, 68 |
 | Detect distribution shape | 64 |
-| Simulate random data | 30, 69, 70, 71 |
+| Simulate random data | 69, 70, 71 |
 
 ## Recipes
 
@@ -140,6 +150,12 @@ When features have vastly different magnitudes — a credit score (300-850) and 
 
 The most important rule in machine learning: never evaluate a model on the same data it trained on. Splitting data into training and test sets lets us measure how well the model generalizes to data it has never seen. This recipe runs the complete pipeline — split the data, train a classifier, predict on held-out examples, and measure accuracy, precision, recall, and F1 score. It's the workflow every ML project follows, regardless of model or domain.
 
+### Dimensionality reduction
+
+**81. [Compress a Dataset with PCA](Sources/Recipes/81-compress-a-dataset-with-pca.swift)**
+
+Real datasets carry redundant columns — square footage, bedrooms, and lot size move together, so they partly say the same thing. PCA rotates the data onto new axes ordered by how much variation each captures, then keeps only the top few. This recipe fits four correlated housing features down to two components, reads the explained-variance ratios, and round-trips through `inverseTransform` to see exactly what compression costs. PCA also slots into `Pipeline` as a reducer stage, so the learned rotation applies identically at predict time.
+
 ### Search and text
 
 **21. [Search by Meaning](Sources/Recipes/21-search-by-meaning.swift)**
@@ -198,7 +214,7 @@ Correlation measures how two variables move together: +1.0 means they rise and f
 
 **28. [Solve a Linear System](Sources/Recipes/28-solve-a-linear-system.swift)**
 
-Many real-world problems reduce to a set of equations with multiple unknowns — two products with unknown prices, three ingredients with unknown proportions. In matrix form, these become A × x = b. If A is invertible, the solution is x = A⁻¹ × b — the matrix inverse isolates the unknowns in one operation. This recipe solves a two-product pricing problem and verifies the answer by plugging the results back into the original equations.
+Many real-world problems reduce to a set of equations with multiple unknowns — two products with unknown prices, three ingredients with unknown proportions. In matrix form, these become A × x = b. `solve(_:)` goes straight to the answer without forming the inverse — faster and numerically more stable than computing x = A⁻¹ × b by hand. This recipe solves a two-product pricing problem and verifies the answer by plugging the results back into the original equations.
 
 ### Clustering
 
@@ -210,7 +226,7 @@ K-Means requires you to choose K — the number of clusters — before running. 
 
 **30. [Generate Arrays](Sources/Recipes/30-generate-arrays.swift)**
 
-Numerical computing starts with creating arrays of specific shapes and values. Instead of writing loops or array literals, generation functions produce arrays from a description: "give me 5 zeros," "100 values evenly spaced from 0 to 10," or "200 samples from a normal distribution." This recipe covers `zeros`, `ones`, `linspace`, `arange`, and `randomNormal` — the building blocks that appear in nearly every other recipe.
+Numerical computing starts with creating arrays of specific shapes and values. Instead of writing loops or array literals, generation functions produce arrays from a description: "give me 5 zeros," "100 values evenly spaced from 0 to 10." This recipe covers `zeros`, `ones`, `linspace`, and `arange` — the building blocks that appear in nearly every other recipe. Random generation is its own topic, covered in Recipes 69–71.
 
 ### Broadcasting
 
@@ -223,12 +239,6 @@ Broadcasting applies a scalar operation to every element in an array without wri
 **32. [Stratified Split](Sources/Recipes/32-stratified-split.swift)**
 
 A regular train/test split can leave all examples of a rare class in one partition. If only 10% of samples are positive and they all end up in the test set, the model trains without ever seeing the positive class. Stratified splitting preserves the class proportions in both partitions, ensuring the model sees representative examples of every class during training.
-
-### Testing equality
-
-**33. [Testing Equality](Sources/Recipes/33-testing-equality.swift)**
-
-Quiver's models support direct comparison with `==`. When two training runs use the same data and the same seed, the models and their clusters are guaranteed identical. This recipe trains K-Means twice with the same seed and confirms equality at both the model level and the cluster level — then shows that a different seed produces a different result. Useful for unit tests, debugging, and verifying pipeline stability.
 
 ### Data balancing
 
@@ -258,9 +268,15 @@ A wing's lift coefficient increases linearly with the angle of attack — the an
 
 ### Athletics & Motion
 
+*The signal-processing recipes in this cookbook — breathing rate and stride frequency (51), grade from elevation (59) — are the same primitives True Effort Score uses to read a workout. Recipe 80 puts them together.*
+
 **41. [Recovery Prediction](Sources/Recipes/41-recovery-prediction.swift)**
 
 After a run, resting heart rate rises — a flat easy run might elevate it by 2 BPM overnight, while a hard hilly run might push it up 8 BPM. This recipe trains a linear regression model on historical run profiles to predict next-morning HR elevation — a proxy for recovery load that the watch measures automatically. No manual entry, no subjective guessing. The insight: two runs with the same stress score produce different overnight HR elevation because uphill grinding costs more recovery than flat cruising.
+
+**80. [Score a Run with True Effort Score](Sources/Recipes/80-score-a-run-with-true-effort-score.swift)**
+
+True Effort Score reads six signals per moment — heart rate, pace, cadence, grade, vertical oscillation, altitude — classifies each moment from Recovery to Hard, and sums the labeled moments into a score. This recipe records a 20-minute simulated run whose second half is a steep descent: heart rate stays calm, but the classifier prices the eccentric load as Hard, which is exactly what a heart-rate-only model misses. `finalize()` returns the full `TESResult` breakdown — headline score, raw score, effort distribution, and the residual (nil on a first run, before the personal baseline exists).
 
 ### Logistics
 
@@ -276,33 +292,25 @@ Word embeddings live in a dictionary keyed by string, where each value is a vect
 
 **46. [Save and Load a Pipeline](Sources/Recipes/46-save-and-load-a-pipeline.swift)**
 
-A `Pipeline` bundles a fitted scaler with a trained model so they travel together as one `Codable` value. The most common ML mistake is saving a model without its scaler — predictions on new data come out wrong because the scaler is gone. This recipe encodes the scaler-and-model pair into a single JSON blob, decodes it back, and confirms identical predictions with `==`. Sits beside Recipe 35, which covers a bare model without a scaler.
+A `Pipeline` bundles a fitted scaler with a trained model so they travel together as one `Codable` value. The most common ML mistake is saving a model without its scaler — predictions on new data come out wrong because the scaler is gone. This recipe encodes the scaler-and-model pair into a single JSON blob, decodes it back, and confirms identical predictions with `==`. Because a Pipeline is a value type, the same JSON can cross machines: train on a Mac, decode at startup inside a Vapor server — no retraining, no shared memory. Sits beside Recipe 35, which covers a bare model without a scaler.
 
 **47. [Pipeline for Linear Regression](Sources/Recipes/47-pipeline-for-linear-regression.swift)**
 
 The same `Pipeline` pattern that wraps a classifier wraps a regressor. `LinearRegression` conforms to the `Regressor` protocol, so a fitted scaler and a fitted regression model encode and decode as one value. This recipe trains on housing-price-shaped data, encodes the pipeline, decodes it, and verifies that predictions match. The `try` is required — the regression overload throws `MatrixError.singular` when features are linearly dependent.
 
-**48. [Train on Mac, Predict on Server](Sources/Recipes/48-train-mac-predict-server.swift)**
-
-A `Pipeline` is a value type, so a model fitted on one machine and decoded on another produces identical predictions. This recipe demonstrates the cross-platform handoff in a single file: encode a fitted pipeline to JSON bytes, simulate writing those bytes to disk by round-tripping through a `Data`, decode on the other side, and verify equality. The pattern shows how a Vapor server loads a model trained on a Mac without retraining at startup.
-
 ### Signals and frequency
 
 **49. [Find the Dominant Frequency](Sources/Recipes/49-find-the-dominant-frequency.swift)**
 
-The Fourier transform crosses from the time domain into the frequency domain, revealing which cycles are hidden inside a signal. This recipe builds a synthetic 5 Hz sine wave, centers it by subtracting the mean, and asks `fourierDominantFrequency(sampleRate:windowed:)` for the loudest frequency in the signal — recovering exactly 5 Hz. The "hello world" of frequency analysis.
+The Fourier transform crosses from the time domain into the frequency domain, revealing which cycles are hidden inside a signal. This recipe builds a synthetic 5 Hz sine wave, centers it by subtracting the mean, and asks `powerSpectralDensity(sampleRate:windowed:)` for the loudest frequency in the signal — recovering exactly 5 Hz. The "hello world" of frequency analysis.
 
 **50. [Print a Frequency Spectrum](Sources/Recipes/50-print-a-frequency-spectrum.swift)**
 
 A spectrum is the full picture of which frequencies are present in a signal and how strong each one is. `fourierSpectrum(sampleRate:windowed:)` returns parallel frequency-magnitude pairs. This recipe builds a signal with two known sine components, computes the spectrum, and walks the bins to find the strongest peak — confirming the math by recovering one of the two known frequencies.
 
-**51. [Breathing Rate from Heart-Rate Variability](Sources/Recipes/51-breathing-rate-from-heart-rate.swift)**
+**51. [One Primitive, Two Sensors](Sources/Recipes/51-one-primitive-two-sensors.swift)**
 
-Respiratory sinus arrhythmia is a small, regular oscillation in heart-rate intervals caused by breathing. The breathing rhythm is hidden inside the R-R interval signal, and the Fourier transform extracts it. This recipe simulates two minutes of R-R intervals at 4 Hz, finds the dominant frequency, and converts to breaths per minute — the same primitive a watchOS app uses to derive a respiratory rate without a dedicated respiratory sensor.
-
-**52. [Stride Frequency from Accelerometer](Sources/Recipes/52-stride-frequency-from-accelerometer.swift)**
-
-Each footstrike during a run shows up as a peak in the accelerometer signal, so the step rate is the dominant frequency of the accelerometer stream. This recipe simulates running at 180 steps per minute (3 Hz), strips the gravity offset by centering, and recovers the cadence with `fourierDominantFrequency(sampleRate:windowed:)`. Same primitive as Recipe 51, different sensor stream.
+The same center-then-`powerSpectralDensity` pattern reads two different watch sensor streams. Breathing rate hides inside heart-rate variability as a small oscillation (respiratory sinus arrhythmia); stride frequency is the dominant peak of the accelerometer stream, one per footstrike. This recipe recovers both — about 15 breaths per minute and 180 steps per minute — changing only the sample rate, frequency, and units. Neither needs a dedicated sensor.
 
 ### Calculus and curve fitting
 
@@ -320,13 +328,9 @@ Position, velocity, and acceleration are linked by calculus: velocity is the der
 
 `Distributions.normal` exposes the textbook functions of the normal distribution as a stateless namespace. The PDF gives the density at a point, the CDF gives the cumulative probability up to a point, and the quantile function inverts the CDF — given a probability, it returns the value that puts that probability below it. Each returns `Double?` and produces `nil` for out-of-domain inputs rather than crashing. The foundation for every probability-based recipe that follows.
 
-**56. [Confidence Interval for the Mean](Sources/Recipes/56-confidence-interval-for-the-mean.swift)**
+**56. [Confidence Intervals with the Bootstrap](Sources/Recipes/56-confidence-intervals-with-the-bootstrap.swift)**
 
-A point estimate — "the mean is 84.6" — gives no sense of how reliable that number is. A confidence interval gives the answer honestly: a range that plausibly contains the true mean. This recipe uses the bootstrap — `resampled(iterations:seed:statistic:)` to draw 1,000 resamples with replacement, take the mean of each, and then `percentileCI(level:)` to extract the 2.5th and 97.5th percentiles. Seeded for reproducibility.
-
-**57. [Confidence Interval for the Median](Sources/Recipes/57-confidence-interval-for-the-median.swift)**
-
-The bootstrap is not specific to the mean. The same resampling primitive supports any statistic — median, variance, trimmed mean, or anything expressible as a closure on a `[Double]`. This recipe uses skewed income data where the mean is dragged upward by a few large values and the median better represents the typical case. Building a confidence interval for the median is the right move when the distribution is not symmetric.
+A point estimate — "the mean is 84.6" — gives no sense of how reliable that number is. A confidence interval answers honestly: a range that plausibly contains the true value. This recipe uses the bootstrap — `resampled(iterations:seed:statistic:)` draws 1,000 resamples with replacement, and `percentileCI` reads off the 2.5th and 97.5th percentiles. The trailing closure is the statistic, so the same primitive builds an interval for the mean and for the median — the right move on skewed income data, where the mean is dragged upward by a few large values. Seeded for reproducibility.
 
 **58. [Calibrated Class Probabilities](Sources/Recipes/58-calibrated-class-probabilities.swift)**
 
@@ -392,21 +396,27 @@ Random work that grades, debugs, or publishes needs to be reproducible. `SeededR
 
 `LinearRegression` solves the normal equation in one matrix expression. `GradientDescent` walks to the same minimum one iteration at a time. The recipe fits a line to house prices both ways on standardized features, prints the two coefficient vectors side by side, and shows the loss trajectory falling toward the closed-form answer. Watching the agreement happen is how the iterative route earns the trust it will need for models — logistic regression next — where no closed form exists.
 
-## Companion book
-
-This cookbook is companion to [Swift Algorithms & Data Structures](https://waynewbishop.github.io/swift-algorithms/), a comprehensive guide that teaches algorithmic thinking through hands-on Swift examples.
-
 ## Contribute
 
 Have a recipe idea? Found something that could be improved? We'd love your input.
 
 - **Request a recipe** — [open an issue](https://github.com/waynewbishop/quiver-cookbook/issues) describing the concept or scenario you'd like to see
-- **Submit your own** — fork the repo, add a `.swift` file to `recipes/`, and open a pull request
+- **Submit your own** — fork the repo, add a `.swift` file to `Sources/Recipes/`, and open a pull request
 - **Report a bug** — if a recipe produces incorrect results, let us know via a PR or issue
 
-## Learn more
+## Learn Quiver
 
-- [Quiver documentation](https://waynewbishop.github.io/quiver/documentation/quiver/) — full API reference and conceptual guides
-- [Swift Algorithms & Data Structures](https://waynewbishop.github.io/swift-algorithms/) — the companion book
-- [Quiver on GitHub](https://github.com/waynewbishop/quiver) — source code, issues, contributions
-- [The Feature Vector](https://featurevector.substack.com) — a newsletter about ML intuition for engineers, built in Swift
+The Cookbook is one stop on the Quiver learning path:
+
+- **[Quiver](https://github.com/waynewbishop/quiver)** — the framework behind every recipe.
+- **[Quiver Notebook](https://github.com/waynewbishop/quiver-notebook)** — browser-based Swift editor with teaching datasets pre-loaded.
+- **[Documentation & primers](https://waynewbishop.github.io/quiver/documentation/quiver/)** — the concepts behind the code, plus full API reference.
+- **[Swift Algorithms & Data Structures](https://waynewbishop.github.io/swift-algorithms/)** — the free companion book for deeper foundations.
+
+## License
+
+Apache 2.0. See [LICENSE](LICENSE).
+
+## Newsletter
+
+[The Feature Vector](https://featurevector.substack.com) — a newsletter about ML intuition for engineers, built in Swift. One idea per issue, with a recipe you can run in Xcode.

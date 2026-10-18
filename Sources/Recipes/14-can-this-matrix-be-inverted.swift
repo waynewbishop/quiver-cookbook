@@ -8,7 +8,7 @@ import Quiver
 
 // This matters because Quiver's ML models use matrix inversion
 // internally. LinearRegression solves the normal equation (X'X)⁻¹X'y,
-// and if your features are overlap, that inversion fails.
+// and if your features overlap, that inversion fails.
 
 #Playground("Can This Matrix Be Inverted?") {
 

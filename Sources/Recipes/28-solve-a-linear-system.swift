@@ -3,10 +3,12 @@ import Quiver
 
 // Solve a Linear System
 // Many real-world problems reduce to a set of equations:
-//   2x + 3y = 16
-//   4x + 1y = 12
-// In matrix form: A × x = b. If A is invertible, x = A⁻¹ × b.
-// The matrix inverse "undoes" A, isolating the unknowns.
+//   2x + 3y = 160
+//   4x + 1y = 120
+// In matrix form: A × x = b. You could compute x = A⁻¹ × b by hand
+// (Recipe 14), but solve() goes straight to the answer — and avoids
+// forming the inverse at all, which is both faster and numerically
+// more stable. In practice: never invert a matrix to solve a system.
 
 #Playground("Solve a Linear System") {
 
@@ -22,23 +24,17 @@ import Quiver
     ]
 
     // Results vector b (total revenue each day)
-    let b: [[Double]] = [
-        [160.0],
-        [120.0]
-    ]
+    let b = [160.0, 120.0]
 
-    // Solve: x = A⁻¹ × b
-    // The inverse "undoes" the mixing of quantities,
-    // revealing the individual prices
-    if let A_inv = try? A.inverted() {
-        let prices = A_inv.multiplyMatrix(b)
+    // Solve directly — returns nil if the system has no unique
+    // solution (a singular A, the same condition Recipe 14 detects
+    // with the determinant)
+    if let prices = A.solve(b) {
+        print("Shirt: $\(prices[0])")  // $20.0
+        print("Hat:   $\(prices[1])")  // $40.0
 
-        // prices[0][0] = shirt price, prices[1][0] = hat price
-        print("Shirt: $\(prices[0][0])")  // $20.0
-        print("Hat:   $\(prices[1][0])")  // $40.0
-
-        // Verify: plug prices back into original equations
-        let check = A.multiplyMatrix(prices)
+        // Verify: plug prices back into the original equations
+        let check = A.multiplyMatrix(prices.map { [$0] })
         print("Verify Day 1: $\(check[0][0])")  // 160.0
         print("Verify Day 2: $\(check[1][0])")  // 120.0
     }

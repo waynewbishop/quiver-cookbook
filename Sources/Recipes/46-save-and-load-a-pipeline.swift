@@ -10,6 +10,12 @@ import Foundation
 // by encoding the scaler and model into a single JSON blob. This
 // recipe sits beside Recipe 35, which covers a bare model without
 // a scaler.
+//
+// Because a Pipeline is a value type, the encoded JSON can also cross
+// machines: train on a Mac, write the bytes to disk or into a server
+// resource bundle, and a Vapor app decodes them at startup — no shared
+// memory, no model server, no retraining. The decode step below is
+// exactly what that server's startup path looks like.
 
 #Playground("Save and Load a Pipeline") {
 
