@@ -3,10 +3,11 @@ import Quiver
 import Foundation
 
 // Score a Run with True Effort Score
-// Recipes 41, 51, 52, and 59 taught the primitives — recovery cost,
-// dominant frequencies, grade from elevation. TrueEffortScore is the
-// model they build toward: it reads six signals per moment (heart rate,
-// pace, cadence, grade, vertical oscillation, altitude), classifies each
+// Recipes 51, 52, and 59 taught the primitives — dominant frequencies,
+// grade from elevation. TrueEffortScore is the model they build toward,
+// and recipe 41 shows what an app does with its result afterward.
+// TES reads six signals per moment (heart rate, pace, cadence, grade,
+// vertical oscillation, altitude), classifies each
 // moment from Recovery to Hard, and sums the labeled moments into a
 // score. One hour at Threshold reads 100; there is no ceiling.
 //

@@ -272,7 +272,7 @@ A wing's lift coefficient increases linearly with the angle of attack — the an
 
 **41. [Recovery Prediction](Sources/Recipes/41-recovery-prediction.swift)**
 
-After a run, resting heart rate rises — a flat easy run might elevate it by 2 BPM overnight, while a hard hilly run might push it up 8 BPM. This recipe trains a linear regression model on historical run profiles to predict next-morning HR elevation — a proxy for recovery load that the watch measures automatically. No manual entry, no subjective guessing. The insight: two runs with the same stress score produce different overnight HR elevation because uphill grinding costs more recovery than flat cruising.
+After a run, resting heart rate rises — an easy jog might elevate it by 1 BPM overnight, while a hard interval session might push it up 8 BPM. This recipe trains a linear regression model on past True Effort Score results — the headline score, the share of time at threshold or harder, and the mean residual — to predict next-morning HR elevation, a proxy for recovery cost that the watch measures automatically. No manual entry, no subjective guessing. The insight: two runs with the same TES can cost different recovery, because a hot day shows up in the residual rather than the score, and the recovery model reads it separately.
 
 **80. [Score a Run with True Effort Score](Sources/Recipes/80-score-a-run-with-true-effort-score.swift)**
 
