@@ -4,7 +4,7 @@
 [![Recipes](https://img.shields.io/badge/recipes-75-blue)](Sources/Recipes)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
-75 interactive recipes for learning statistics, linear algebra, and machine learning in Swift with [Quiver](https://github.com/waynewbishop/quiver). Each recipe is a single `.swift` file that runs interactively inside Xcode using the `#Playground` macro — results appear inline as you type. No setup, no datasets to download, no loops unless the loop is the lesson.
+75 interactive Swift recipes for learning statistics, linear algebra, and machine learning with [Quiver](https://github.com/waynewbishop/quiver). Each recipe is a single Swift file that uses Xcode’s `#Playground` macro to show results inline.
 
 Several recipes are the working building blocks behind [True Effort Score](https://waynewbishop.github.io/quiver/documentation/quiver/true-effort-score), Quiver's training-load model for Apple Watch — recovery prediction (41), breathing rate and stride frequency (51), grade from elevation (59) — and Recipe 80 scores a run with the model itself.
 
@@ -20,11 +20,17 @@ Several recipes are the working building blocks behind [True Effort Score](https
 git clone https://github.com/waynewbishop/quiver-cookbook.git
 ```
 
-Open the project in Xcode 26. The package requires Quiver 1.7.0 or newer and resolves it automatically. Quiver also runs on Linux. The interactive cookbook uses Xcode and the `#Playground` macro. Browse `Sources/Recipes/`, pick a file, and run it. Each recipe uses the `#Playground` macro, which shows results inline as you type.
+Open the cloned package in Xcode 26, then choose a Swift file in [Sources/Recipes](Sources/Recipes) and run its playground. Xcode resolves the Quiver dependency automatically. The package requires Quiver 1.7.0 or newer.
 
 Each recipe is at most 50 lines, including comments and blank lines.
 
 Recipe numbers are stable identifiers — new recipes keep their original numbers wherever they land, so gaps in the sequence are normal. Recipe 36 is retired and its ID is reserved.
+
+## What's new with Quiver 1.7.0
+
+- [Classify Email with Binary Features](Sources/Recipes/82-classify-email-with-binary-features.swift) uses Bernoulli Naive Bayes to classify messages from presence and absence flags.
+- [From a Test Statistic to a Tail Probability](Sources/Recipes/83-from-a-test-statistic-to-a-tail-probability.swift) shows how to use the t and chi-squared distributions to calculate p-values.
+- [Fix a Singular Regression Fit](Sources/Recipes/84-fix-a-singular-regression-fit.swift) shows why using both Celsius and Fahrenheit makes the fit singular and how using one temperature column resolves it.
 
 ## Quick reference — by use case
 
@@ -420,6 +426,7 @@ The Cookbook is one stop on the Quiver learning path:
 
 - **[Quiver](https://github.com/waynewbishop/quiver)** — the framework behind every recipe.
 - **[Quiver Notebook](https://github.com/waynewbishop/quiver-notebook)** — browser-based Swift editor with teaching datasets pre-loaded.
+- **[Quiver MCP](https://github.com/waynewbishop/quiver-mcp)** lets you ask Codex or Claude Code to run Quiver calculations locally and explain the results. Try its house-price prompt alongside [Predict a House Price](Sources/Recipes/15-predict-a-house-price.swift) to see the same kind of regression in Swift.
 - **[Documentation & primers](https://waynewbishop.github.io/quiver/documentation/quiver/)** — the concepts behind the code, plus full API reference.
 - **[Swift Algorithms & Data Structures](https://waynewbishop.github.io/swift-algorithms/)** — the free companion book for deeper foundations.
 
