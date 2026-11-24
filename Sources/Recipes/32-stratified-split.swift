@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -9,7 +12,6 @@ import Quiver
 // the class proportions in both partitions.
 
 #Playground("Stratified Split") {
-
     // Imbalanced dataset: 8 negative (0), 2 positive (1)
     let features: [[Double]] = [
         [1.0, 2.0], [2.0, 3.0], [1.5, 2.5], [3.0, 1.0],
@@ -28,6 +30,6 @@ import Quiver
     // Train and evaluate — the split flows directly into the pipeline
     let model = GaussianNaiveBayes.fit(features: trainX, labels: trainY)
     let predictions = model.predict(testX)
-    
+
     print(predictions.classificationReport(actual: testY))
 }

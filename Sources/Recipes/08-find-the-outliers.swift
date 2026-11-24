@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -7,7 +10,6 @@ import Quiver
 // a value sits from the mean. Values beyond the threshold are flagged.
 
 #Playground("Find the Outliers") {
-
     // Daily temperature readings — two days look unusual
     let temps = [72.0, 68.5, 71.2, 70.1, 69.8, 66.3, 71.8, 95.2, 70.5, 38.1]
 

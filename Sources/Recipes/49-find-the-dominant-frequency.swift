@@ -1,6 +1,9 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // Find the Dominant Frequency in a Signal
 // The Fourier transform converts a time-domain signal into its
@@ -13,7 +16,6 @@ import Foundation
 // Hann window to reduce spectral leakage on finite signals.
 
 #Playground("Find the Dominant Frequency in a Signal") {
-
     // Generate a 5 Hz sine wave sampled at 64 Hz for 256 samples
     let sampleRate = 64.0
     let signal = [Double].sineWave(

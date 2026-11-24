@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -8,7 +11,6 @@ import Quiver
 // Together they reconstruct the original exactly.
 
 #Playground("Project a Vector onto Another") {
-
     // A force vector pushing at an angle
     let force = [5.0, 3.0]
 

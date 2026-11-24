@@ -1,17 +1,15 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
-// Delivery Route Optimizer — Smarter Stop Sequencing
-// A delivery driver with 25 stops and a route card drives them
-// in whatever order they were assigned — often zigzagging across
-// the entire area. This recipe uses K-Means to cluster stops into
-// geographic groups, then sequences within each cluster by
-// nearest neighbor. The result: same stops, less windshield time.
-// Enterprise route optimization costs hundreds of thousands.
-// This runs on an iPhone with zero dependencies.
+// Group Delivery Stops into Zones
+// K-Means groups stop coordinates into three zones and reports each
+// stop's distance from its zone center in coordinate degrees.
 
-#Playground("Delivery Route Optimizer") {
-
+#Playground("Group Delivery Stops into Zones") {
     // 12 delivery stops: [latitude, longitude]
     let stops: [[Double]] = [
         [47.610, -122.330], [47.615, -122.340], [47.605, -122.320],
@@ -23,7 +21,7 @@ import Quiver
     // Cluster into geographic zones
     let model = KMeans.fit(data: stops, k: 3, seed: 42)
 
-    // Plan the route — complete each zone before moving to the next
+    // List the stops assigned to each zone.
     for (i, cluster) in model.clusters(from: stops).enumerated() {
         let center = cluster.centroid
         print("Zone \(i + 1): \(cluster.count) stops near [\(String(format: "%.3f", center[0])), \(String(format: "%.3f", center[1]))]")

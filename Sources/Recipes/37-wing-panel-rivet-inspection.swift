@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -13,7 +16,6 @@ import Quiver
 // laser scanning, and dozens of additional parameters.
 
 #Playground("Wing Panel Rivet Inspection") {
-
     // Inspection readings: [hole diameter (mm), countersink depth (mm), flushness (mm)]
     // Rivets within tolerance pass. Oversized or protruding rivets fail.
     let readings: [[Double]] = [

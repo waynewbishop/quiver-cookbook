@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -9,7 +13,6 @@ import Quiver
 // how often B beats A.
 
 #Playground("A/B Test Simulation") {
-
     var rng = SeededRandomNumberGenerator(seed: 1234)
 
     let visitorsPerVariant = 1000
@@ -40,6 +43,5 @@ import Quiver
     print()
     print("B beat A in \(bWins) of \(experiments) experiments (\(String(format: "%.1f%%", rate * 100)))")
     print()
-    print("Even though B's true rate is higher, the gap is small relative")
-    print("to the sampling noise — running just one experiment can mislead.")
+    print("This counts observed wins. A power estimate requires a defined significance test.")
 }

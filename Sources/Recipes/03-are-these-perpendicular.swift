@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -6,7 +9,6 @@ import Quiver
 // Positive = same direction, zero = perpendicular, negative = opposite.
 
 #Playground("Are These Perpendicular?") {
-
     // Case 1: Same direction — dot product is positive
     // Both vectors point to the upper-right
     let a1 = [3.0, 4.0]

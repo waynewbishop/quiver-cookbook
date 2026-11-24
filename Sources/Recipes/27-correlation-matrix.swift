@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -8,7 +12,6 @@ import Quiver
 //  0.0 = no relationship at all.
 
 #Playground("Correlation Matrix") {
-
     // Five days of data: temperature (°F) and ice cream sales ($)
     let temperature = [75.0, 80.0, 85.0, 70.0, 90.0]
     let iceCreamSales = [200.0, 240.0, 300.0, 180.0, 320.0]

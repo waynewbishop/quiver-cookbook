@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -10,7 +14,6 @@ import Quiver
 // wraps any fitted regressor and reports the gap.
 
 #Playground("Analyze Regression Residuals") {
-
     // Square footage → house price. The fit recovers a clean line;
     // one home sells well above what its size predicts.
     let sqft: [[Double]] = [[1000.0], [1500.0], [2000.0], [2500.0], [3000.0]]

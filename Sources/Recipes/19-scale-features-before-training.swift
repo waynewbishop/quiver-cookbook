@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -10,7 +13,6 @@ import Quiver
 // all features to the same range so each one contributes fairly.
 
 #Playground("Scale Features Before Training") {
-
     // Raw features: [credit score, account balance]
     // Balance is ~300× larger than credit score — it will dominate distance
     let features: [[Double]] = [

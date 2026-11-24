@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -10,7 +14,6 @@ import Quiver
 // coefficients that minimize prediction error.
 
 #Playground("Predict a House Price") {
-
     // Training data: [square feet, bedrooms, age in years]
     let features: [[Double]] = [
         [1400, 3, 10],

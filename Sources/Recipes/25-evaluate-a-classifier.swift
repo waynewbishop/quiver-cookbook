@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -7,7 +11,6 @@ import Quiver
 // catching zero spam. Precision, recall, and F1 reveal the full picture.
 
 #Playground("Evaluate a Classifier") {
-
     // A model predicted these classes (0 = no rain, 1 = rain)
     let predicted = [0, 1, 1, 0, 1, 0, 1, 1, 0, 0]
     let actual    = [0, 1, 0, 0, 1, 1, 1, 1, 0, 0]

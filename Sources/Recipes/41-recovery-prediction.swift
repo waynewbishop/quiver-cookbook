@@ -1,23 +1,14 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
-// Recovery Prediction — How Hard Will Tomorrow Morning Feel?
-// After a run, resting heart rate rises. An easy jog might elevate
-// resting HR by 1 BPM overnight; a hard interval session might push
-// it up 8 BPM. True Effort Score (recipe 80) already measures what a
-// run cost in the moment. This recipe trains a regression model on
-// past TES results to predict next-morning HR elevation — a proxy
-// for recovery cost that the watch measures automatically.
-// No manual entry, no subjective guessing.
+// Use simulated workout summaries to estimate next-morning heart rate elevation.
 
 #Playground("Recovery Prediction") {
-
-    // Historical runs, one row per finalized TESResult:
-    //   adjusted       — result.adjusted, the headline score
-    //   thresholdShare — effortDistribution[.threshold] + [.hard]
-    //   meanResidual   — result.meanResidual, bpm above expected
-    // TES already prices climbs and descents in the score and the
-    // effort distribution, so no separate terrain columns are needed.
+    // Columns: score, fraction of time at threshold or harder, residual in bpm.
     let history: [[Double]] = [
         [45,  0.00,  0.5],   // easy
         [72,  0.05,  1.0],   // long easy
@@ -30,11 +21,10 @@ import Quiver
     ]
 
     // Next-morning resting HR elevation (BPM above baseline)
-    // Measured automatically by the watch — no manual entry
-    let hrElevation = [1.5, 3.5, 4.5, 4.0, 8.0, 1.0, 5.5, 7.5]
+    let heartRateElevation = [1.5, 3.5, 4.5, 4.0, 8.0, 1.0, 5.5, 7.5]
 
     // Train on the relationship between the TES breakdown and recovery cost
-    let model = try LinearRegression.fit(features: history, targets: hrElevation)
+    let model = try LinearRegression.fit(features: history, targets: heartRateElevation)
     print(model)
 
     // Today's run: TES 85, 30% of the time at threshold or harder
@@ -42,18 +32,12 @@ import Quiver
     let prediction = model.predict(todaysRun)
     print("Predicted HR elevation: +\(String(format: "%.0f", prediction[0])) BPM")   // +5
 
-    // Same score, same distribution, but heart rate ran 7 bpm above
-    // expected — a hot day. TES keeps the residual out of the headline,
-    // so the score stays 85; the recovery model reads it separately.
+    // Hold score and effort constant while changing the residual.
     let hotRun = [[85.0, 0.30, 7.0]]
     let hotPrediction = model.predict(hotRun)
     print("Same TES, hot day:      +\(String(format: "%.0f", hotPrediction[0])) BPM")   // +7
 
-    // summary() reports which columns actually drove the prediction.
-    // With only 8 training samples, only the residual is confidently
-    // non-zero; the intervals on the score and threshold share cross
-    // zero. That is itself the lesson: small training sets give wide
-    // confidence intervals. Hold out a test set in production.
-    let report = try model.summary(features: history, targets: hrElevation)
+    // Inspect the coefficient uncertainty for this small fixture.
+    let report = try model.summary(features: history, targets: heartRateElevation)
     print(report)
 }

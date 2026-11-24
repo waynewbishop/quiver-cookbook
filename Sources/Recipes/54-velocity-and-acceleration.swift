@@ -1,6 +1,9 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // Velocity and Acceleration
 // Position, velocity, and acceleration are linked by calculus:
@@ -12,7 +15,6 @@ import Foundation
 // acceleration. This is what raw `LinearRegression` cannot do.
 
 #Playground("Velocity and Acceleration") {
-
     // Position samples from a falling object: s(t) = 0.5·g·t²
     // with g = 9.8 m/s², measured at one-second intervals
     let t = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]

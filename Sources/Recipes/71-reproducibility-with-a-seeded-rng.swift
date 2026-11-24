@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -10,7 +13,6 @@ import Quiver
 // AND the Swift standard library's `using:` overloads.
 
 #Playground("Reproducibility with a Seeded RNG") {
-
     // Two RNGs initialized with the same seed
     var rng1 = SeededRandomNumberGenerator(seed: 42)
     var rng2 = SeededRandomNumberGenerator(seed: 42)

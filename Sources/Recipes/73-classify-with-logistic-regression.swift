@@ -1,17 +1,15 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
 // Classify with Logistic Regression
-// Naive Bayes (Recipe 16) counts statistics and KNN (Recipe 17)
-// stores points and votes. Logistic regression is the first
-// classifier that *learns* a decision boundary: it fits coefficients
-// by gradient descent on cross-entropy loss, then turns a linear
-// score into a probability with the sigmoid (Recipe 24). Predicting
-// a yes-or-no outcome is the most common classification task in
-// applied machine learning.
+// Logistic regression fits coefficients by gradient descent on
+// cross-entropy loss and turns the linear score into a probability
+// with the sigmoid (Recipe 24).
 
 #Playground("Classify with Logistic Regression") {
-
     // Hours studied → passed the exam (0 = failed, 1 = passed).
     // A clean threshold sits somewhere around five hours.
     let hours: [[Double]] = [
@@ -29,9 +27,9 @@ import Quiver
     let predictions = model.predict([[2.5], [7.5]])
     print("predictions:", predictions)  // [0, 1]
 
-    // Coefficients are available through the Coefficients protocol —
-    // the same surface LinearRegression and Ridge expose.
+    // Inspect the learned coefficients and the equation for log-odds.
     print("coefficients:", model.coefficients)
+    print(model.equation(variables: ["hours"]))
 
     // The scalar predict overload handles a single-feature model
     // without the nested-array ceremony.

@@ -1,6 +1,9 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // Fit a Curve with polyfit
 // Linear regression draws a straight line through points. polyfit
@@ -13,7 +16,6 @@ import Foundation
 // first.
 
 #Playground("Fit a Curve with polyfit") {
-
     // Points sampled from y = 2x² + 3x + 1 (degree 2)
     let x = [1.0, 2.0, 3.0, 4.0, 5.0]
     let y = [6.0, 15.0, 28.0, 45.0, 66.0]

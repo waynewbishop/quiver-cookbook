@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -9,7 +13,6 @@ import Quiver
 // Small p means the die looks rigged.
 
 #Playground("Chi-Squared Goodness of Fit") {
-
     // Observed counts for faces 1–6 across 60 rolls
     let observed: [Double] = [9, 11, 8, 12, 10, 10]
     let expected: [Double] = [10, 10, 10, 10, 10, 10]   // fair die hypothesis

@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -11,7 +14,6 @@ import Quiver
 // more stable. In practice: never invert a matrix to solve a system.
 
 #Playground("Solve a Linear System") {
-
     // A store sells two products. From two days of sales data:
     //   Day 1: 2 shirts + 3 hats = $160 revenue
     //   Day 2: 4 shirts + 1 hat  = $120 revenue
@@ -26,9 +28,7 @@ import Quiver
     // Results vector b (total revenue each day)
     let b = [160.0, 120.0]
 
-    // Solve directly — returns nil if the system has no unique
-    // solution (a singular A, the same condition Recipe 14 detects
-    // with the determinant)
+    // Solve directly. Quiver returns nil for a system it treats as singular.
     if let prices = A.solve(b) {
         print("Shirt: $\(prices[0])")  // $20.0
         print("Hat:   $\(prices[1])")  // $40.0
@@ -38,4 +38,7 @@ import Quiver
         print("Verify Day 1: $\(check[0][0])")  // 160.0
         print("Verify Day 2: $\(check[1][0])")  // 120.0
     }
+    // The rows differ in floating point but are nearly dependent.
+    let nearlyDependent = [[1.0, 1.0], [1.0, 1.0 + Double.ulpOfOne]]
+    print("Near-singular solve: \(nearlyDependent.solve([2.0, 2.0]) as Any)")
 }

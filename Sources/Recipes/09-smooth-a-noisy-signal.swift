@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -6,7 +9,6 @@ import Quiver
 // each point with its neighbors, revealing the underlying trend.
 
 #Playground("Smooth a Noisy Signal") {
-
     // Heart rate readings — real sensors fluctuate between beats
     let raw = [72.0, 78.0, 71.0, 85.0, 74.0, 80.0, 73.0, 82.0, 76.0, 79.0]
 

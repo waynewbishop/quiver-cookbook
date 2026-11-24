@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -10,7 +14,6 @@ import Quiver
 // reveals the natural number of groups in the data.
 
 #Playground("Find the Best K") {
-
     // Data with three natural clusters
     let data: [[Double]] = [
         [1.0, 2.0], [1.5, 1.8], [1.2, 2.1], [1.3, 1.9],

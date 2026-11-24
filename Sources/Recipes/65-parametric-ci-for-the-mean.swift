@@ -1,15 +1,15 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
 // Parametric CI for the Mean
-// The bootstrap CI (Recipe 56) makes no distributional assumption.
-// The parametric CI does — it assumes the sample mean follows a
-// t-distribution — but pays off in shorter code and exact coverage
-// when the assumption holds. Use this when the sample is reasonably
-// symmetric; fall back to bootstrap when it isn't.
+// Under independent normal sampling, the standardized sample mean
+// using the estimated standard error follows a t distribution.
 
 #Playground("Parametric CI for the Mean") {
-
     // Daily API response times (ms)
     let times: [Double] = [42, 45, 47, 43, 46, 44, 48, 42, 45, 46]
 

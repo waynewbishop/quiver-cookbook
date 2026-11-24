@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -9,7 +12,6 @@ import Quiver
 // the trust it will need for models where no closed form exists.
 
 #Playground("Gradient Descent on House Prices") {
-
     // Five homes: square footage and asking price.
     let sqft   = [[1000.0], [1500.0], [2000.0], [2500.0], [3000.0]]
     let prices = [150000.0, 200000.0, 260000.0, 310000.0, 370000.0]

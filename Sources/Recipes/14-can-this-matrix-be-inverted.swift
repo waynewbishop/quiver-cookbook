@@ -1,35 +1,26 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
-// Can This Matrix Be Inverted?
-// A matrix inverse "undoes" the original transformation.
-// A × A⁻¹ = Identity (the "do nothing" matrix).
-// If the determinant is zero, the matrix is singular — no inverse exists.
-
-// This matters because Quiver's ML models use matrix inversion
-// internally. LinearRegression solves the normal equation (X'X)⁻¹X'y,
-// and if your features overlap, that inversion fails.
+// Quiver rejects matrices whose rows are numerically dependent.
 
 #Playground("Can This Matrix Be Inverted?") {
-
     // A 2×2 matrix with a non-zero determinant
-    let A: [[Double]] = [
+    let matrix: [[Double]] = [
         [4.0, 7.0],
         [2.0, 6.0]
     ]
 
-    // Step 1: Check the determinant
-    // det = (4×6) - (7×2) = 24 - 14 = 10
-    let det = A.determinant  // 10.0 — non-zero, so inverse exists
-    print("Determinant: \(det)")
+    let determinant = matrix.determinant
+    print("Determinant: \(determinant)")
 
-    // Step 2: Compute the inverse
-    if let inv = try? A.inverted() {
-        print("A⁻¹ = \(inv)")
+    if let inverse = try? matrix.inverted() {
+        print("A⁻¹ = \(inverse)")
 
-        // Step 3: Verify — A × A⁻¹ should equal the identity matrix
-        // The identity matrix is [[1, 0], [0, 1]] — it changes nothing
-        let identity = A.multiplyMatrix(inv)
+        // The product should be the identity up to rounding.
+        let identity = matrix.multiplyMatrix(inverse)
         print("A × A⁻¹ = \(identity)")
         // [[1.0, 0.0], [0.0, 1.0]] — confirmed
     }
@@ -40,6 +31,13 @@ import Quiver
     print("Singular det = \(singular.determinant)")  // 0.0
     print("Invertible?   \((try? singular.inverted()) != nil)")  // false
 
-    // Quick check before fitting a model — non-zero means safe:
-    print("Your matrix det: \(A.determinant)")  // 10.0 → safe to fit
+    // Floating-point rows can be too close to dependent to invert reliably.
+    let nearlyDependent = [[1.0, 1.0], [1.0, 1.0 + Double.ulpOfOne]]
+    print("Near-singular determinant: \(nearlyDependent.determinant)")
+    do {
+        _ = try nearlyDependent.inverted()
+        print("Inverse computed")
+    } catch {
+        print("Inversion failed: \(error)")
+    }
 }

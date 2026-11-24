@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -6,7 +10,6 @@ import Quiver
 // These are the first questions any data scientist asks about new data.
 
 #Playground("Describe a Dataset") {
-
     // Exam scores for a class of 12 students
     let scores = [72.0, 85.0, 91.0, 68.0, 95.0, 88.0, 76.0, 82.0, 79.0, 93.0, 65.0, 87.0]
 

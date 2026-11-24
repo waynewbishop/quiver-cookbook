@@ -1,17 +1,20 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // Save and Load a Trained Model
 // Every Quiver model conforms to Codable, so a trained model can be
 // encoded to JSON and decoded back with identical predictions. This
 // means we train once and reuse across app launches, devices, or
 // platforms — no retraining needed. The same pattern works for
-// LinearRegression, GaussianNaiveBayes, KMeans, KNearestNeighbors,
+// LinearRegression, GaussianNaiveBayes, BernoulliNaiveBayes, KMeans,
+// KNearestNeighbors,
 // and FeatureScaler.
 
 #Playground("Save and Load a Trained Model") {
-
     // Train the model
     let features: [[Double]] = [[1.0], [2.0], [3.0], [4.0], [5.0]]
     let targets = [2.1, 3.9, 6.1, 8.0, 9.8]

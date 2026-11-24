@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -18,7 +22,6 @@ import Quiver
 // that predicts house prices also predicts whether a wing flies.
 
 #Playground("Wind Tunnel Lift Predictor") {
-
     // Simulated wind tunnel readings for a NACA 2412 airfoil
     // Angle of attack (degrees) → measured lift coefficient
     let angles: [[Double]] = [[0.0], [2.0], [4.0], [6.0], [8.0], [10.0]]

@@ -1,13 +1,16 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
 // Sampling Distribution of the Standard Deviation
 // Sample standard deviations have their own sampling distribution,
-// which is skewed for small samples and noisier than the mean's.
-// Watch the spread shrink — slowly — as the sample size grows.
+// which can be skewed for small normal samples. Compare the spread
+// at three sample sizes.
 
 #Playground("Sampling Distribution of the Standard Deviation") {
-
     var rng = SeededRandomNumberGenerator(seed: 7)
     let population = [Double].randomNormal(10_000, mean: 0.0,
                                            standardDeviation: 1.0,
@@ -23,5 +26,5 @@ import Quiver
     }
     print()
     print("True population SD = 1.0. As n grows, sample SDs cluster")
-    print("more tightly around 1.0 — but slower than sample means.")
+    print("more tightly around 1.0.")
 }

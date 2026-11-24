@@ -1,6 +1,9 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // Print a Frequency Spectrum
 // A spectrum is the full picture of which frequencies are present
@@ -11,7 +14,6 @@ import Foundation
 // components and recovers both peaks from the spectrum.
 
 #Playground("Print a Frequency Spectrum") {
-
     // Mix two sine waves: 5 Hz and 12 Hz, sampled at 64 Hz
     let sampleRate = 64.0
     let count = 256

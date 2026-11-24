@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -9,7 +12,6 @@ import Quiver
 // math IS the algorithm.
 
 #Playground("Find the Nearest Neighbor") {
-
     // Two clear clusters in 2D space
     let features: [[Double]] = [
         [1.0, 2.0], [1.5, 1.8], [1.2, 2.1],   // cluster A (class 0)

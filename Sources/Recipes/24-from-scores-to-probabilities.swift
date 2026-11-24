@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -8,7 +12,6 @@ import Quiver
 // SoftMax distributes a set of scores into probabilities that sum to 1.
 
 #Playground("From Scores to Probabilities") {
-
     // --- Sigmoid: binary decisions ---
     // "Is this email spam?" — one score, one probability
     let spamScores = [-2.0, -0.5, 0.0, 1.0, 3.5]

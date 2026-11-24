@@ -1,6 +1,9 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // Pipeline for Linear Regression
 // Pipelines work for regression as well as classification. The
@@ -12,7 +15,6 @@ import Foundation
 // wrap the call in `try`.
 
 #Playground("Pipeline for Linear Regression") {
-
     // Inline housing data: [square feet, bedrooms, age in years]
     let features: [[Double]] = [
         [1400, 3, 10], [1600, 3, 5], [1700, 4, 8], [1875, 4, 3],

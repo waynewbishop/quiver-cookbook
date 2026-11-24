@@ -1,16 +1,13 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
-// Balance Imbalanced Data
-// When one class vastly outnumbers another, models tend to
-// predict the larger class and ignore the smaller one. The
-// oversample function generates synthetic points for
-// smaller classes by interpolating between existing
-// samples — using the same vector arithmetic from Recipes 1-3.
-// It auto-detects which classes need more samples.
+// Oversampling interpolates between minority-class examples.
+// In a model workflow, apply it only to the training split.
 
 #Playground("Balance Imbalanced Data") {
-
     // Imbalanced dataset: 8 negative, 2 positive
     let features: [[Double]] = [
         [1.0, 2.0], [1.5, 1.8], [2.0, 2.5], [1.2, 2.1],
@@ -33,18 +30,5 @@ import Quiver
     // class-1 samples, filling in the gap so the model sees enough
     // examples of both classes during training.
     print("Before: \(features.count) samples → After: \(balanced.count) samples")
-
-    // Now split, train, and evaluate on balanced data
-    let split = balanced.stratifiedSplit(
-        labels: balancedLabels, testRatio: 0.2, seed: 42
-    )
-
-    let model = KNearestNeighbors.fit(
-        features: split.trainFeatures,
-        labels: split.trainLabels,
-        k: 3
-    )
-
-    let predictions = model.predict(split.testFeatures)
-    print(predictions.classificationReport(actual: split.testLabels))
+    print(balancedLabels.classDistribution())  // [0: 8, 1: 8]
 }

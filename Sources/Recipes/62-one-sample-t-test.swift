@@ -1,6 +1,9 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // One-Sample t-Test
 // We hypothesize the class mean is 12. A new sample of 12 students
@@ -11,7 +14,6 @@ import Foundation
 // probability into a single p-value.
 
 #Playground("One-Sample t-Test") {
-
     let scores = [12.0, 14.0, 11.0, 13.0, 15.0, 9.0,
                   11.0, 13.0, 16.0, 12.0, 10.0, 14.0]
     let mu0 = 12.0  // hypothesized population mean

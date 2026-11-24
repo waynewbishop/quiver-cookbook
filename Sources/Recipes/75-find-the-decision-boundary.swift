@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -6,11 +10,10 @@ import Quiver
 // probability, it computes a raw linear score: the decision function.
 // That score is the geometric heart of the classifier — its sign is
 // the predicted class, and the point where it crosses zero is the
-// decision boundary. Reading the score directly lets us see how far
-// a sample sits from that boundary, and move the threshold by hand.
+// decision boundary. Reading the score directly lets us see the log-odds
+// for a sample and which side of the boundary it lands on.
 
 #Playground("Find the Decision Boundary") {
-
     // Hours studied → passed the exam (0 = failed, 1 = passed).
     let hours: [[Double]] = [
         [1.0], [2.0], [3.0], [4.0],
@@ -22,7 +25,8 @@ import Quiver
 
     // The decision function returns the raw log-odds before the sigmoid.
     // Negative → class 0, positive → class 1, zero → exactly on the
-    // boundary. The magnitude is how confidently it lands on that side.
+    // boundary.
+    print(model.equation(variables: ["hours"], form: .probability))
     let scores = model.decisionFunction([[2.0], [5.0], [8.0]])
     for (h, s) in zip([2.0, 5.0, 8.0], scores) {
         let side = s >= 0 ? "pass" : "fail"
@@ -32,7 +36,7 @@ import Quiver
     // The boundary — where the score crosses zero — sits between
     // 2 and 5 hours, so a 5-hour student already lands on the pass side.
 
-    // The scalar overload reads one sample's signed distance from the boundary.
+    // The scalar overload reads one sample's log-odds.
     let borderline = model.decisionFunction(5.0)
     print("5h log-odds:", String(format: "%.3f", borderline))  // 0.636
 }

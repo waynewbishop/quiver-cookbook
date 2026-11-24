@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -7,7 +11,6 @@ import Quiver
 // is it clustered in the middle? skewed to one side? spread evenly?
 
 #Playground("Build a Histogram") {
-
     // Generate 50 values from a normal distribution
     // mean = 100, std = 15 — like IQ scores
     let data = [Double].randomNormal(50, mean: 100.0, standardDeviation: 15.0)

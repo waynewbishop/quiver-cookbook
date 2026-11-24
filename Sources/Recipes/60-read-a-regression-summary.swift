@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -10,7 +14,6 @@ import Quiver
 // be noise?" — the inferential heart of regression.
 
 #Playground("Read a Regression Summary") {
-
     // Hours studied → final exam score
     let features: [[Double]] = [
         [1.0], [2.0], [3.0], [4.0], [5.0],

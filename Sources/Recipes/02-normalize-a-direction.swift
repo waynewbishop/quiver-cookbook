@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -6,7 +9,6 @@ import Quiver
 // A unit vector has length 1 and points in the same direction.
 
 #Playground("Normalize a Direction") {
-
     // A velocity vector: 3 units east, 4 units north
     let velocity = [3.0, 4.0]
     let speed = velocity.magnitude  // 5.0 (the "how much")

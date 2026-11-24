@@ -1,6 +1,9 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // Save and Load a Pipeline
 // A Pipeline bundles a fitted scaler with a trained model so they
@@ -18,7 +21,6 @@ import Foundation
 // exactly what that server's startup path looks like.
 
 #Playground("Save and Load a Pipeline") {
-
     // Train a K-Nearest Neighbors classifier with automatic scaling
     let features: [[Double]] = [[1, 2], [3, 4], [5, 8], [6, 9]]
     let labels = [0, 0, 1, 1]

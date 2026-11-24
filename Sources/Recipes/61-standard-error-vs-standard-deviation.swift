@@ -1,6 +1,9 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // Standard Error vs Standard Deviation
 // The standard deviation describes the *data* — how far values
@@ -12,7 +15,6 @@ import Foundation
 // in applied work.
 
 #Playground("Standard Error vs Standard Deviation") {
-
     // Reported heights (cm) from a small classroom sample
     let heights = [168.0, 172.0, 165.0, 178.0, 170.0, 169.0, 174.0,
                    167.0, 171.0, 173.0, 166.0, 175.0, 170.0, 169.0, 172.0]

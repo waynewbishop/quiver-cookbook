@@ -1,21 +1,13 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
-// Classify with Naive Bayes
-// Gaussian Naive Bayes uses the same statistics from Recipe 7 —
-// mean and variance — but computes them per class. For each new
-// data point, it evaluates the Gaussian probability density function
-// (built from exp() and the statistics) and picks the class with
-// the highest probability. The math is familiar; the application is ML.
-//
-// One subtlety worth naming: Naive Bayes internally uses the
-// population variance (ddof = 0) because each class is treated as
-// its own complete population. Recipe 7's standardDeviation() uses
-// the sample variance (ddof = 1) by default. Same formula family,
-// different denominator. Both are correct in their context.
+// Gaussian Naive Bayes estimates each feature’s mean and variance by class.
+// See Recipe 82 for binary features.
 
-#Playground("Classify with Naive Bayes") {
-
+#Playground("Classify with Gaussian Naive Bayes") {
     // Weather data: [temperature °F, humidity %]
     // Class 0 = no rain, Class 1 = rain
     let features: [[Double]] = [
@@ -24,23 +16,15 @@ import Quiver
     ]
     let labels = [0, 0, 0, 0, 1, 1, 1, 1]
 
-    // Fit: computes mean() and variance() per feature per class —
-    // the same statistics from Recipe 7, applied per group
     let model = GaussianNaiveBayes.fit(features: features, labels: labels)
 
-    // See what the model learned — print() gives a clean summary
-    // for each class: the prior probability, the feature means,
-    // and sample count. This IS the entire training — just averages.
+    // Inspect the fitted class priors and feature means.
     print(model)  // GaussianNaiveBayes: 2 classes, 2 features
-    for stats in model.classes {
-        print(stats)
-        // Class 0: prior 50.0%, means [83.75, 32.50], 4 samples
-        // Class 1: prior 50.0%, means [63.75, 85.75], 4 samples
+    for classSummary in model.classes {
+        print(classSummary)
     }
 
-    // Classify: groups results by predicted label.
-    // Each Classification has a label and the points assigned to it —
-    // the same pattern as clusters in K-Means (Recipe 18)
+    // Group new observations by their predicted label.
     let forecast: [[Double]] = [[80.0, 38.0], [63.0, 82.0], [75.0, 45.0]]
     let results = model.classify(forecast)
 
@@ -51,9 +35,4 @@ import Quiver
             print("  temp: \(point[0])°F, humidity: \(point[1])%")
         }
     }
-
-    // predict() still available for evaluation pipelines
-    let trainPredictions = model.predict(features)
-    let accuracy = trainPredictions.accuracy(actual: labels)
-    print("Training accuracy: \(String(format: "%.1f", accuracy * 100))%")
 }

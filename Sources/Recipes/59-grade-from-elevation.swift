@@ -1,26 +1,27 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // Grade from Elevation with derivative()
-// `derivative(sampleRate:)` is the finite-difference operator —
-// it divides consecutive differences by the sample interval. The
-// result has one fewer element than the input because each output
-// is the rate of change between two adjacent samples. The same
-// operator that converts elevation to grade also converts speed
-// to acceleration; one primitive serves both signals on the kind
-// of sensor stream a watchOS workout app records every second.
+// The elevation derivative gives vertical speed. Percent grade uses
+// elevation change divided by horizontal distance over each interval.
 
 #Playground("Grade from Elevation with derivative()") {
-
     // Elevation samples (meters) recorded every second on a hilly run
-    let elevation = [100.0, 102.0, 105.0, 109.0, 112.0,
-                     114.0, 113.0, 110.0, 107.0, 105.0]
+    let elevation = [100.0, 100.2, 100.5, 100.9, 101.2,
+                     101.4, 101.3, 101.0, 100.7, 100.5]
 
-    // Grade is the rate of change of elevation per second
-    let grade = elevation.derivative(sampleRate: 1.0)
-    print("Grade (m/s): \(grade)")
-    // [2.0, 3.0, 4.0, 3.0, 2.0, -1.0, -3.0, -3.0, -2.0]
+    let verticalSpeed = elevation.derivative(sampleRate: 1.0)
+    print("Vertical speed (m/s):", verticalSpeed.map { String(format: "%.2f", $0) })
+
+    // Cumulative horizontal distance (meters), aligned with elevation.
+    let distance = [0.0, 3.0, 6.2, 9.6, 13.1, 16.6, 20.2, 24.0, 28.0, 32.1]
+    let horizontalSpeed = distance.derivative(sampleRate: 1.0)
+    let grade = verticalSpeed.divide(horizontalSpeed).map { 100 * $0 }
+    print("Percent grade:", grade.map { String(format: "%.1f%%", $0) })
 
     // Speed samples (m/s) recorded every second over the same window
     let speed = [3.0, 3.2, 3.4, 3.5, 3.5, 3.6, 3.8, 4.0, 4.1, 4.0]

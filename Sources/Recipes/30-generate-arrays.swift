@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -8,7 +11,6 @@ import Quiver
 // "give me 5 zeros" or "100 values evenly spaced from 0 to 10."
 
 #Playground("Generate Arrays") {
-
     // Constant arrays — useful for initializing accumulators or baselines
     let z = [Double].zeros(5)           // [0.0, 0.0, 0.0, 0.0, 0.0]
     let o = [Double].ones(4)            // [1.0, 1.0, 1.0, 1.0]

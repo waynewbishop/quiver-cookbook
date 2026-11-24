@@ -1,10 +1,10 @@
 # Quiver Cookbook — Statistics, Linear Algebra & Machine Learning in Swift
 
 [![Swift](https://img.shields.io/badge/Swift-6-orange)](https://swift.org)
-[![Recipes](https://img.shields.io/badge/recipes-73-blue)](Sources/Recipes)
+[![Recipes](https://img.shields.io/badge/recipes-75-blue)](Sources/Recipes)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
-73 interactive recipes for learning statistics, linear algebra, and machine learning in Swift with [Quiver](https://github.com/waynewbishop/quiver). Each recipe is a single `.swift` file that runs interactively inside Xcode using the `#Playground` macro — results appear inline as you type. No setup, no datasets to download, no loops unless the loop is the lesson.
+75 interactive recipes for learning statistics, linear algebra, and machine learning in Swift with [Quiver](https://github.com/waynewbishop/quiver). Each recipe is a single `.swift` file that runs interactively inside Xcode using the `#Playground` macro — results appear inline as you type. No setup, no datasets to download, no loops unless the loop is the lesson.
 
 Several recipes are the working building blocks behind [True Effort Score](https://waynewbishop.github.io/quiver/documentation/quiver/true-effort-score), Quiver's training-load model for Apple Watch — recovery prediction (41), breathing rate and stride frequency (51), grade from elevation (59) — and Recipe 80 scores a run with the model itself.
 
@@ -20,9 +20,11 @@ Several recipes are the working building blocks behind [True Effort Score](https
 git clone https://github.com/waynewbishop/quiver-cookbook.git
 ```
 
-Open the project in Xcode 26. Quiver is included as a package dependency and resolves automatically — no manual setup. Browse `Sources/Recipes/`, pick a file, and run it. Each recipe uses the `#Playground` macro, which shows results inline as you type.
+Open the project in Xcode 26. The package requires Quiver 1.7.0 or newer and resolves it automatically. Quiver also runs on Linux. The interactive cookbook uses Xcode and the `#Playground` macro. Browse `Sources/Recipes/`, pick a file, and run it. Each recipe uses the `#Playground` macro, which shows results inline as you type.
 
-Recipe numbers are stable identifiers — new recipes keep their original numbers wherever they land, so gaps in the sequence are normal.
+Each recipe is at most 50 lines, including comments and blank lines.
+
+Recipe numbers are stable identifiers — new recipes keep their original numbers wherever they land, so gaps in the sequence are normal. Recipe 36 is retired and its ID is reserved.
 
 ## Quick reference — by use case
 
@@ -32,18 +34,18 @@ Recipe numbers are stable identifiers — new recipes keep their original number
 | Build a recommendation or search engine | 4, 5, 6, 21, 45 |
 | Build retrieval for a language model | 77, 78, 79 |
 | Analyze and explore a dataset | 7, 8, 9, 10, 22, 27 |
-| Learn how matrix math powers ML | 11, 12, 13, 14, 28 |
-| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 36, 37, 38, 41, 47, 60, 72, 73, 76 |
+| Learn how matrix math powers ML | 11, 12, 13, 14, 28, 84 |
+| Train and evaluate an ML model | 15, 16, 17, 18, 20, 25, 26, 37, 38, 41, 47, 60, 72, 73, 76, 82 |
 | Save and load trained models | 35, 46, 47 |
 | Prepare data for machine learning | 19, 22, 24, 30, 32, 34, 35 |
 | Compress a dataset with PCA | 81 |
-| Find patterns in unlabeled data | 6, 18, 29 |
+| Find patterns in unlabeled data | 6, 18, 29, 42 |
 | Write numerical code without loops | 31 |
 | Analyze signals and frequency | 49, 50, 51, 59 |
 | Score a workout with True Effort Score | 41, 51, 59, 80 |
 | Fit curves and work with calculus | 53, 54 |
-| Reason with probability and confidence | 55, 56, 58, 61, 62, 63, 65, 66, 67, 68 |
-| Detect distribution shape | 64 |
+| Reason with probability and confidence | 55, 56, 58, 61, 62, 63, 65, 66, 67, 68, 83 |
+| Find tied sample modes | 64 |
 | Simulate random data | 69, 70, 71 |
 
 ## Recipes
@@ -110,7 +112,7 @@ Matrix multiplication computes each output cell as the dot product of one row fr
 
 **14. [Can This Matrix Be Inverted?](Sources/Recipes/14-can-this-matrix-be-inverted.swift)**
 
-A matrix inverse "undoes" the original transformation — multiplying a matrix by its inverse produces the identity matrix (the mathematical equivalent of multiplying by 1). The determinant tells you whether an inverse exists: if it's zero, the matrix is singular and has collapsed space into a lower dimension, losing information that can't be recovered. Linear regression uses matrix inversion internally to solve for optimal coefficients.
+A matrix times its inverse gives the identity. This recipe compares an invertible matrix, an exactly singular matrix, and a nearly dependent matrix. Quiver uses a scale-aware cutoff to reject inversions that are numerically singular.
 
 ### Machine learning
 
@@ -118,9 +120,13 @@ A matrix inverse "undoes" the original transformation — multiplying a matrix b
 
 Linear regression finds the best-fit line (or plane) through data points by computing coefficients that minimize prediction error. Given features like square footage, bedrooms, and age, the model learns how much each feature contributes to the price. The R² score measures how well the model fits — 1.0 is perfect, 0.0 means the model explains nothing. This is the most fundamental regression algorithm and the starting point for understanding all supervised learning.
 
-**16. [Classify with Naive Bayes](Sources/Recipes/16-classify-with-naive-bayes.swift)**
+**16. [Classify with Gaussian Naive Bayes](Sources/Recipes/16-classify-with-naive-bayes.swift)**
 
-Gaussian Naive Bayes learns the mean and variance of each feature for each class during training. When predicting, it asks: "given this data point, which class makes it most probable?" The "naive" part assumes features are independent — rarely true in practice, but the simplification makes the model fast and surprisingly effective. It trains in a single pass through the data with no iteration, making it ideal for quick baselines and small datasets.
+Gaussian Naive Bayes models continuous features by learning their mean and variance within each class. It assumes that features are independent given the class. For binary presence and absence flags, see Recipe 82.
+
+**82. [Classify Email with Binary Features](Sources/Recipes/82-classify-email-with-binary-features.swift)**
+
+Fit Bernoulli Naive Bayes to yes/no email features. Compare predictions for the same urgent phrase with and without a known sender, and see how Laplace smoothing handles a flag absent from every spam training example.
 
 **17. [Find the Nearest Neighbor](Sources/Recipes/17-find-the-nearest-neighbor.swift)**
 
@@ -128,15 +134,15 @@ K-Nearest Neighbors stores the entire training set and classifies new points by 
 
 **73. [Classify with Logistic Regression](Sources/Recipes/73-classify-with-logistic-regression.swift)**
 
-Naive Bayes counts statistics and K-Nearest Neighbors stores points and votes — logistic regression is the first classifier that actually *learns* a decision boundary, fitting coefficients by gradient descent on cross-entropy loss. It predicts a yes-or-no outcome, the most common classification task in applied machine learning, and exposes its coefficients through the same protocol as linear regression. This completes the classification arc: a lazy learner (KNN), a statistical learner (Naive Bayes), and a discriminative learner (logistic regression).
+Fit a binary classifier by minimizing cross-entropy with gradient descent. Inspect its coefficients and print the fitted log-odds equation with the feature name.
 
 **74. [Predict Class Probabilities](Sources/Recipes/74-predict-class-probabilities.swift)**
 
-A class label answers "which side?" — but often we want the confidence behind that answer. Logistic regression produces a probability between 0 and 1 for the positive class, so we can decide how sure the model must be before acting on its prediction. This recipe reads those probabilities and shows how raising the decision threshold — only act when the model is at least 80% sure — is one line on top of them, with no retraining.
+Read the model’s estimated probability of passing and compare the predicted labels at cutoffs of 0.5 and 0.8.
 
 **75. [Find the Decision Boundary](Sources/Recipes/75-find-the-decision-boundary.swift)**
 
-Before logistic regression squashes a score into a probability, it computes a raw linear score: the decision function. That score is the geometric heart of the classifier — its sign is the predicted class, and the point where it crosses zero is the decision boundary. Reading the score directly shows how far a sample sits from that boundary, making "a classifier draws a line" literal rather than abstract.
+Print the fitted probability equation and inspect the raw log-odds from `decisionFunction(_:)`. A score of zero marks the default decision boundary.
 
 **18. [Cluster Without Labels](Sources/Recipes/18-cluster-without-labels.swift)**
 
@@ -154,7 +160,7 @@ The most important rule in machine learning: never evaluate a model on the same 
 
 **81. [Compress a Dataset with PCA](Sources/Recipes/81-compress-a-dataset-with-pca.swift)**
 
-Real datasets carry redundant columns — square footage, bedrooms, and lot size move together, so they partly say the same thing. PCA rotates the data onto new axes ordered by how much variation each captures, then keeps only the top few. This recipe fits four correlated housing features down to two components, reads the explained-variance ratios, and round-trips through `inverseTransform` to see exactly what compression costs. PCA also slots into `Pipeline` as a reducer stage, so the learned rotation applies identically at predict time.
+Standardize four housing features before fitting PCA. Inspect the variance explained by two components, then reconstruct the first row approximately in its original units.
 
 ### Search and text
 
@@ -168,17 +174,17 @@ Recipe 21 hand-rolls the search pipeline; this one shows what the `Embedder` pro
 
 **78. [Retrieve a Passage for a Question](Sources/Recipes/78-retrieve-a-passage-for-a-question.swift)**
 
-Retrieval scales semantic search from a catalog of phrases to a document: a `Chunker` cuts the document into fragments, an `Embedder` turns each fragment into a vector, and an `EmbeddingIndex` embeds the corpus once at ingest and ranks it against any question. This is the half of retrieval-augmented generation that Quiver owns — the top chunks become the context a language model answers from. The question "what temperature to bake at" retrieves the chunk about a hot oven even though the two share no words, because "temperature" sits near "hot", "oven", and "heat" in embedding space.
+Split a short document into paragraphs with a `Chunker`, then store their vectors in an `EmbeddingIndex`. A question about temperature retrieves the paragraph about a hot oven because the sample’s word vectors put those terms close together.
 
 **79. [Decide When Retrieval Is Good Enough](Sources/Recipes/79-decide-when-retrieval-is-good-enough.swift)**
 
-Retrieval always returns something — even an off-topic question gets a ranked list, and handing weak context to a language model invites a confident wrong answer. `RetrievalResult` keeps the full score field visible (mean, spread, top score, top z-score), and `isAboveGate(floor:outlierZ:)` composes two checks: the top hit is good on its own terms, or it stands clearly above the rest of the field. The thresholds are deliberately the caller's policy — Quiver supplies the composition, never the cutoff. When the gate fails, the honest move is to say "I don't know" instead of answering from noise.
+Compare a question about baking with an off-topic question about a battery. `isAboveGate(floor:outlierZ:)` checks whether the best score clears a floor or stands out from the rest of the scores. With this small example, the floor determines both outcomes.
 
 ### Data organization
 
 **22. [Organize Data with Panel](Sources/Recipes/22-organize-data-with-panel.swift)**
 
-Raw arrays of numbers are hard to work with when each column represents something different — age, income, credit score. Panel gives your data named columns so you can access, filter, inspect, and split data without losing track of which numbers mean what. This recipe shows how to create a Panel, run `summary()` for a statistical overview, filter rows by condition, and split into training and test sets with columns staying aligned automatically.
+Use a `Panel` to name, summarize, and filter columns, then iterate its rows and read individual values by name. Split the panel into training and test data and extract the feature matrix.
 
 ### Projections
 
@@ -214,7 +220,11 @@ Correlation measures how two variables move together: +1.0 means they rise and f
 
 **28. [Solve a Linear System](Sources/Recipes/28-solve-a-linear-system.swift)**
 
-Many real-world problems reduce to a set of equations with multiple unknowns — two products with unknown prices, three ingredients with unknown proportions. In matrix form, these become A × x = b. `solve(_:)` goes straight to the answer without forming the inverse — faster and numerically more stable than computing x = A⁻¹ × b by hand. This recipe solves a two-product pricing problem and verifies the answer by plugging the results back into the original equations.
+Use `solve(_:)` to find the prices of two products without forming a matrix inverse. Verify the answer by substituting the prices back into the original equations. A nearly dependent example shows when the solver returns `nil`.
+
+**84. [Fix a Singular Regression Fit](Sources/Recipes/84-fix-a-singular-regression-fit.swift)**
+
+Fit demand using Celsius and Fahrenheit as predictors. Catch the singular fit, drop the redundant feature, and print the fitted equation.
 
 ### Clustering
 
@@ -244,7 +254,7 @@ A regular train/test split can leave all examples of a rare class in one partiti
 
 **34. [Balance Imbalanced Data](Sources/Recipes/34-balance-imbalanced-data.swift)**
 
-When one class vastly outnumbers another, models tend to predict the larger class and ignore the smaller one. This recipe balances the dataset by generating synthetic points for smaller classes — interpolating between existing samples using the same vector arithmetic from Recipes 1-3. Each new point sits on the line between two real samples, creating realistic training data without duplicating what already exists.
+Use `oversample(labels:)` to interpolate between minority-class examples and compare class counts before and after. When evaluating a model, split the original data first and oversample only the training partition.
 
 ### Model persistence
 
@@ -253,10 +263,6 @@ When one class vastly outnumbers another, models tend to predict the larger clas
 Every Quiver model conforms to `Codable`. Train a model, encode it to JSON with `JSONEncoder`, decode it back with `JSONDecoder` — same coefficients, same predictions, verified by `==`. This recipe shows the complete round-trip: train, encode to bytes in memory, decode back to a working model. The developer decides where those bytes go — a file, UserDefaults, WatchConnectivity, or a Vapor endpoint.
 
 ### Engineering ideas
-
-**36. [Can Swift Drive a Car?](Sources/Recipes/36-can-swift-drive-a-car.swift)**
-
-A playful, theoretical model that uses K-Nearest Neighbors to classify driving decisions from simulated sensor data. Given speed, distance to an obstacle, and lane offset, the model votes on whether to accelerate, maintain, brake, or steer — learning the decision boundaries from training examples rather than hardcoded rules. To be clear: Quiver cannot drive a car. Real autonomous vehicles use neural networks processing camera feeds, lidar, and radar at massive scale. This recipe demonstrates how classification works on sensor data using the same underlying math — at a much, much smaller scale.
 
 **37. [Wing Panel Rivet Inspection](Sources/Recipes/37-wing-panel-rivet-inspection.swift)**
 
@@ -276,13 +282,13 @@ After a run, resting heart rate rises — an easy jog might elevate it by 1 BPM 
 
 **80. [Score a Run with True Effort Score](Sources/Recipes/80-score-a-run-with-true-effort-score.swift)**
 
-True Effort Score reads six signals per moment — heart rate, pace, cadence, grade, vertical oscillation, altitude — classifies each moment from Recovery to Hard, and sums the labeled moments into a score. This recipe records a 20-minute simulated run whose second half is a steep descent: heart rate stays calm, but the classifier prices the eccentric load as Hard, which is exactly what a heart-rate-only model misses. `finalize()` returns the full `TESResult` breakdown — headline score, raw score, effort distribution, and the residual (nil on a first run, before the personal baseline exists).
+Record a simulated run with six input signals and inspect `TESResult` for the score, time by effort class, and residual. This fixture is classified as Tempo. The first session’s result has no personal residual. Finalizing can fit a baseline for later sessions.
 
 ### Logistics
 
-**42. [Delivery Route Optimizer](Sources/Recipes/42-delivery-route-optimizer.swift)**
+**42. [Group Delivery Stops into Zones](Sources/Recipes/42-group-delivery-stops-into-zones.swift)**
 
-A delivery driver with 25 stops and a route card drives them in whatever order they were assigned — often zigzagging across the entire area. This recipe uses K-Means to cluster stops into geographic groups, then shows the stops within each zone sorted by distance from the cluster center. Enterprise route optimization costs hundreds of thousands of dollars. This runs on an iPhone with zero dependencies. Pair with Apple's MapKit for turn-by-turn directions between the optimized sequence of stops.
+Use K-Means to group 12 simulated delivery stops into three geographic zones. Print each zone center and each stop’s distance from it in coordinate degrees.
 
 **45. [Find the Nearest Word](Sources/Recipes/45-find-the-nearest-word.swift)**
 
@@ -330,17 +336,17 @@ Position, velocity, and acceleration are linked by calculus: velocity is the der
 
 **56. [Confidence Intervals with the Bootstrap](Sources/Recipes/56-confidence-intervals-with-the-bootstrap.swift)**
 
-A point estimate — "the mean is 84.6" — gives no sense of how reliable that number is. A confidence interval answers honestly: a range that plausibly contains the true value. This recipe uses the bootstrap — `resampled(iterations:seed:statistic:)` draws 1,000 resamples with replacement, and `percentileCI` reads off the 2.5th and 97.5th percentiles. The trailing closure is the statistic, so the same primitive builds an interval for the mean and for the median — the right move on skewed income data, where the mean is dragged upward by a few large values. Seeded for reproducibility.
+Estimate percentile confidence intervals for the mean and median of a skewed income sample using 1,000 seeded resamples. This recipe assumes the observations can be resampled independently. Sampling designs with dependence need a resampling method that preserves it.
 
-**58. [Calibrated Class Probabilities](Sources/Recipes/58-calibrated-class-probabilities.swift)**
+**58. [Threshold Gaussian Naive Bayes Probabilities](Sources/Recipes/58-threshold-gaussian-naive-bayes-probabilities.swift)**
 
-`predict(_:)` returns one label per sample — the model's best guess. `predictProbabilities(_:)` returns the full probability distribution across classes for each sample. These calibrated probabilities power cost-sensitive decisions: when a false positive is more expensive than a false negative, we can demand higher confidence before predicting the positive class. This recipe shows that each row sums to 1.0 and tunes a custom decision threshold of 0.7.
+Gaussian Naive Bayes returns a normalized probability estimate for each class. Use overlapping weather observations to see a label change when the rain cutoff rises from 0.5 to 0.7. Calibration asks whether predictions at a given probability match observed frequencies.
 
 ### Finite differences
 
 **59. [Grade from Elevation](Sources/Recipes/59-grade-from-elevation.swift)**
 
-`derivative(sampleRate:)` is the finite-difference operator — it divides consecutive differences by the sample interval. The result has one fewer element than the input because each output is the rate of change between two adjacent samples. The same operator that converts elevation to grade also converts speed to acceleration; one primitive serves both signals on the kind of sensor stream a watchOS workout app records every second.
+Differentiate elevation to get vertical speed, then divide by horizontal speed and multiply by 100 to get percent grade over each interval. Differentiating the recorded speed separately gives acceleration.
 
 ### Inferential statistics
 
@@ -360,21 +366,21 @@ We hypothesize the class mean is 12 and observe a sample with mean 12.5. Is the 
 
 We rolled a die 60 times. If the die is fair, each face should appear about 10 times. The chi-squared goodness-of-fit statistic summarizes how far observed counts drifted from expected counts, and the chi-squared distribution's CDF turns that summary into a p-value. Small p means the die looks rigged. The recipe uses `Distributions.chiSquared.cdf(x:df:)` to perform the canonical categorical-data hypothesis test.
 
-**64. [Bimodal Detection with mode()](Sources/Recipes/64-bimodal-detection-with-mode.swift)**
+**64. [Find Tied Modes with mode()](Sources/Recipes/64-find-tied-modes.swift)**
 
-Some distributions are bimodal — two clusters share the highest frequency. A scalar mode would silently pick one. Quiver's `mode()` returns `[Element]`, so the two-headed shape surfaces as a multi-element array. The recipe mixes two height populations into one dataset and shows that `mode()` returns both peak values, paired with a histogram that makes the two-cluster shape visible.
+Two observed heights tie for highest frequency. Quiver 1.7.0 returns both values in order of first appearance. A histogram shows how the sample clusters.
 
 **65. [Parametric CI for the Mean](Sources/Recipes/65-parametric-ci-for-the-mean.swift)**
 
-The bootstrap confidence interval (Recipe 56) makes no distributional assumption. The parametric confidence interval does — it assumes the sample mean follows a t-distribution — but pays off in shorter code and exact coverage when the assumption holds. The formula is `mean ± t_critical · standard_error`. Use this recipe when the sample is reasonably symmetric; fall back to bootstrap when it is not.
+Use the sample mean, its estimated standard error, and a t critical value to form a 95% confidence interval. The standardized mean follows a t distribution under independent normal sampling.
 
 **66. [Sampling Distribution of the Median](Sources/Recipes/66-sampling-distribution-of-the-median.swift)**
 
-The mean's sampling distribution is the Central Limit Theorem's canonical illustration. The median has its own sampling distribution — and on symmetric data, it is wider than the mean's at the same sample size. That is the quantitative version of "the mean is the more statistically efficient summary on symmetric data." The recipe uses `samplingDistributionOfMean` and `samplingDistributionOfMedian` side by side to make the spread comparison concrete.
+Compare the spreads of the sample mean and median in repeated draws from a simulated normal population. For these normal data, the sample median varies more.
 
 **67. [Sampling Distribution of the Standard Deviation](Sources/Recipes/67-sampling-distribution-of-standard-deviation.swift)**
 
-Sample standard deviations have their own sampling distribution, which is skewed for small samples and noisier than the mean's. The recipe sweeps three sample sizes (10, 50, 200), bootstraps 1,000 sample SDs at each size, and reports the spread. The lesson lands on its own: sample SDs cluster more tightly around the true population SD as the sample grows, but slower than sample means do.
+Draw repeated samples of sizes 10, 50, and 200 from a simulated normal population. Compare the spread of the resulting standard deviations and see it shrink as the sample size grows.
 
 **68. [Central Limit Theorem for a Non-Normal Source](Sources/Recipes/68-clt-for-a-non-normal-source.swift)**
 
@@ -382,11 +388,11 @@ The Central Limit Theorem holds even when the source population is wildly non-no
 
 **69. [Inter-Arrival Times with randomExponential](Sources/Recipes/69-inter-arrival-times.swift)**
 
-Server requests, user events, customer arrivals — when events happen at a steady average rate but with random spacing, the gaps between them follow an exponential distribution. The mean gap is `1/rate`. This recipe uses `randomExponential` to simulate realistic arrival patterns for load testing or capacity modeling, and shows the memoryless property: some requests arrive back-to-back while others have long gaps.
+Simulate gaps between arrivals in a homogeneous Poisson process. To demonstrate memorylessness, compare the mean remaining wait after 0.2 seconds with the mean wait from the start.
 
 **70. [A/B Test with randomBinomial](Sources/Recipes/70-ab-test-with-randombinomial.swift)**
 
-Variant A converts at 4%. Variant B converts at 5%. With 1,000 visitors per variant, will we reliably see the difference, or will it get lost in sampling noise? The recipe simulates 500 experiments by drawing from a binomial distribution and counting how often B beats A. The result is sobering — even with a true 25% relative lift, B beats A in only about 65% of single experiments. One run can easily mislead.
+Simulate 500 experiments with 1,000 visitors per variant and true conversion rates of 4% and 5%. In the seeded simulation, B records more conversions in 425 experiments (85.0%). Estimating statistical power would require a defined significance test.
 
 **71. [Reproducibility with a Seeded RNG](Sources/Recipes/71-reproducibility-with-a-seeded-rng.swift)**
 
@@ -395,6 +401,10 @@ Random work that grades, debugs, or publishes needs to be reproducible. `SeededR
 **72. [Gradient Descent on House Prices](Sources/Recipes/72-gradient-descent-on-house-prices.swift)**
 
 `LinearRegression` solves the normal equation in one matrix expression. `GradientDescent` walks to the same minimum one iteration at a time. The recipe fits a line to house prices both ways on standardized features, prints the two coefficient vectors side by side, and shows the loss trajectory falling toward the closed-form answer. Watching the agreement happen is how the iterative route earns the trust it will need for models — logistic regression next — where no closed form exists.
+
+**83. [From a Test Statistic to a Tail Probability](Sources/Recipes/83-from-a-test-statistic-to-a-tail-probability.swift)**
+
+Use the t and chi-squared PDFs to read the density at a test statistic. Use their CDFs to calculate p-values as tail areas for Recipes 62 and 63.
 
 ## Contribute
 

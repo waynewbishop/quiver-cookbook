@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -7,7 +10,6 @@ import Quiver
 // mathematical formula — the code IS the equation.
 
 #Playground("Broadcasting") {
-
     // Fahrenheit to Celsius — the formula: C = (F - 32) × 5/9
     // Broadcasting lets us write it exactly as math notation
     let fahrenheit = [32.0, 68.0, 72.0, 98.6, 212.0]

@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -9,7 +12,6 @@ import Quiver
 // to data it has never seen.
 
 #Playground("Split, Train, Evaluate") {
-
     // Weather data: [temperature °F, humidity %]
     // Class 0 = no rain, Class 1 = rain
     let features: [[Double]] = [

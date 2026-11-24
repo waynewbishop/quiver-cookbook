@@ -1,15 +1,15 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
 // Inter-Arrival Times with randomExponential
-// Server requests, user events, customer arrivals — when events
-// happen at a steady average rate but with random spacing, the
-// gaps between them follow an exponential distribution. The mean
-// gap is 1/rate. Use randomExponential to simulate realistic
-// arrival patterns when load testing or modeling capacity.
+// A homogeneous Poisson process has independent exponential gaps
+// at a constant arrival rate. The expected gap is 1/rate.
 
 #Playground("Inter-Arrival Times") {
-
     var rng = SeededRandomNumberGenerator(seed: 31)
 
     // Suppose API requests arrive at 5 per second on average.
@@ -26,7 +26,10 @@ import Quiver
     print("observed mean gap: \(String(format: "%.4f", gaps.mean() ?? 0))s")
     print("expected mean gap: \(String(format: "%.4f", 1.0 / rate))s")
     print()
-    print("Notice the spread — some requests arrive almost back-to-back,")
-    print("others have long gaps. That is the memoryless property of")
-    print("the exponential distribution.")
+    // Compare typical remaining waits after already waiting 0.2 seconds.
+    let sample = [Double].randomExponential(10_000, rate: rate, using: &rng)
+    let cutoff = 0.2
+    let remaining = sample.filter { $0 > cutoff }.map { $0 - cutoff }
+    print("Mean remaining wait after \(cutoff)s: \(remaining.mean() ?? 0)s")
+    print("Mean wait from the start: \(sample.mean() ?? 0)s")
 }

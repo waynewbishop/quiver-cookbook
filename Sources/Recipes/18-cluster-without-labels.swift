@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -9,7 +12,6 @@ import Quiver
 // recalculate center — repeats until the clusters stabilize.
 
 #Playground("Cluster Without Labels") {
-
     // Unlabeled 2D data — three natural groups visible to humans
     let data: [[Double]] = [
         [1.0, 2.0], [1.5, 1.8], [1.2, 2.1],    // group A

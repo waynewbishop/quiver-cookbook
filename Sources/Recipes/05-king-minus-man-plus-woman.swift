@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -7,7 +11,6 @@ import Quiver
 // example in natural language processing.
 
 #Playground("King − Man + Woman = Queen") {
-
     // Simplified 4D word embeddings (real ones have 50-300 dimensions)
     let king  = [0.9, 0.2, 0.8, 0.7]   // Male royalty
     let man   = [0.8, 0.1, 0.2, 0.6]   // Male concept

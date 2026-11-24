@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -7,7 +10,6 @@ import Quiver
 // basis vectors (x-axis and y-axis) end up after rotation.
 
 #Playground("Rotate a Point 90 Degrees") {
-
     // 90° counterclockwise rotation matrix
     // Column 1: x-axis [1,0] moves to [0,1] (points up)
     // Column 2: y-axis [0,1] moves to [-1,0] (points left)

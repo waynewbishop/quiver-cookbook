@@ -1,6 +1,9 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
-import Foundation
 
 // The Normal Distribution: PDF, CDF, and Quantiles
 // `Distributions.normal` exposes the three textbook functions of
@@ -12,7 +15,6 @@ import Foundation
 // out-of-domain inputs (negative `std`, `p` outside `(0, 1)`).
 
 #Playground("The Normal Distribution") {
-
     // Standard normal: mean = 0, std = 1
     let mean = 0.0
     let std  = 1.0

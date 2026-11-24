@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -6,7 +9,6 @@ import Quiver
 // but they answer different questions.
 
 #Playground("How Far Is Home?") {
-
     // Magnitude answers: "how far am I from the origin (home)?"
     // For vector [3, 4], that's √(3² + 4²) = √(9 + 16) = √25 = 5.0
     let position = [3.0, 4.0]

@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -9,7 +13,6 @@ import Quiver
 // give. This is the CLT's claim made physical.
 
 #Playground("Central Limit Theorem — Non-Normal Source") {
-
     var rng = SeededRandomNumberGenerator(seed: 99)
 
     // Skewed source: rate = 0.5 → population mean is 1/0.5 = 2.0

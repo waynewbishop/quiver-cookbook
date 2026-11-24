@@ -1,14 +1,12 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
-// Organize Data with Panel
-// Panel gives your data named columns — like a spreadsheet
-// where each column has a label. This makes it easy to inspect,
-// filter, split, and feed data into ML models without losing
-// track of which numbers mean what.
+// Keep values together by naming each column in a Panel.
 
 #Playground("Organize Data with Panel") {
-
     // Create a Panel with named columns
     let data = Panel([
         ("age",     [25.0, 45.0, 35.0, 52.0, 23.0, 41.0, 33.0, 28.0]),
@@ -16,44 +14,30 @@ import Quiver
         ("score",   [620.0, 750.0, 680.0, 790.0, 590.0, 720.0, 660.0, 640.0])
     ])
 
-    // print() gives a quick summary of the structure
-    print(data)  // Panel: 3 columns, 8 rows
-
-    // head() shows the actual data in tabular format
     print(data.head(n: 5))
-
-    // summary() returns a typed PanelSummary across every column —
-    // count, mean, std (sample, ddof=1), min, max. Print it directly
-    // for the formatted table, or access individual ColumnSummary
-    // structs by column name.
     let report = data.summary()
     print(report)
     if let incomeStats = report.columns["income"] {
         print("Income mean: \(incomeStats.mean)")
-        print("Income std:  \(incomeStats.std)")
+        print("Income standard deviation:  \(incomeStats.std)")
     }
-
-    // Access a single column by name
-    let ages = data["age"]        // [25.0, 45.0, 35.0, ...]
-    let avgAge = ages.mean()      // ~35.25
-    print("Average age: \(avgAge ?? 0)")
 
     // Filter: keep only rows where score > 650
     let highScore = data["score"].isGreaterThan(650.0)
     let qualified = data.filtered(where: highScore)
     print("Qualified rows: \(qualified.rowCount)")
 
+    // A Panel is a sequence of rows. Read each value by column name.
+    for row in qualified {
+        print("Qualified age \(row["age"]), score \(row["score"])")
+    }
+
     // Split for ML: 80% train, 20% test — columns stay aligned
     let (train, test) = data.trainTestSplit(testRatio: 0.2, seed: 42)
 
-    // Verify the training data after splitting
-    print(train.head())
-
-    // .shape returns (rows, columns) — same format as matrix .shape
     print("Training: \(train.shape)")
     print("Test: \(test.shape)")
 
-    // Convert to matrix for model input
     let features = train.toMatrix(columns: ["age", "income"])
     print("Feature matrix: \(features.shape)")
 }

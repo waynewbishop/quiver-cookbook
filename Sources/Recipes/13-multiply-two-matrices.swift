@@ -1,3 +1,6 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import Playgrounds
 import Quiver
 
@@ -7,7 +10,6 @@ import Quiver
 // Each output cell is the dot product of one row and one column.
 
 #Playground("Multiply Two Matrices") {
-
     // Matrix A: 2 rows × 3 columns
     let A: [[Double]] = [
         [1.0, 2.0, 3.0],

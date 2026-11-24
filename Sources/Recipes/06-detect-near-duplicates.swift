@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -7,7 +11,6 @@ import Quiver
 // Useful for deduplication in document sets, product catalogs, or embeddings.
 
 #Playground("Detect Near-Duplicates") {
-
     // Five document vectors — two are suspiciously similar
     let documents: [[Double]] = [
         [0.8, 0.7, 0.9],   // Doc 0

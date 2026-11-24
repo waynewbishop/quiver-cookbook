@@ -1,3 +1,7 @@
+// Copyright 2026 Wayne W Bishop. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import Foundation
 import Playgrounds
 import Quiver
 
@@ -7,7 +11,6 @@ import Quiver
 // Score: 1.0 = identical direction, 0.0 = unrelated, -1.0 = opposite.
 
 #Playground("Find the Most Similar Item") {
-
     // A query vector (what the user likes)
     let query = [0.8, 0.7, 0.9]
 
